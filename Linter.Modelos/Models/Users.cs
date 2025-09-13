@@ -6,7 +6,7 @@ namespace Linter.Modelos.Modelos
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
 
-    public class TAB001_Usuarios : IdentityUser<int>
+    public class Users : IdentityUser<int>
     {
         public byte TipoUsuario { get; set; }//talvez isso esteja mais relacionado a tabelas de roles doq a de usuarios, pensar sobre
         public string? Rua { get; set; }

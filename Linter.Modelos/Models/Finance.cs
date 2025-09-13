@@ -11,7 +11,7 @@ namespace Linter.Modelos.Modelos
     public class CAX001_Movimentacoes
     {
         [Key]
-        public int idMovimentacao { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage ="Informe a data da movimentação")]
         public DateTime? DataMovimentacao { get; set; }
         [MaxLength(300, ErrorMessage = "Digite no máximo 300 caracteres para a descrição.")]

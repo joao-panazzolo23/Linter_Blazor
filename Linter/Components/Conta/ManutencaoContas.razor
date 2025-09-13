@@ -1,7 +1,7 @@
 ﻿@page "/contasgerenciais/{tipoView:int}/{id:int}"
 
 @rendermode InteractiveServer
-@inject CNT001_ContasGerenciaisRepositorio rep
+@inject DeletedAccountRepository rep
 @inject CNT002_ContasExcluidasRepositorio repCancelamento
 @inject AuthenticationStateProvider auth
 @inject NavigationManager navigation
@@ -61,7 +61,7 @@
     public int id { get; set; }
     [SupplyParameterFromForm]
     public string MotivoCancelamento { get; set; } = "";
-    public CNT001_ContasGerenciais Conta { get; set; } = new CNT001_ContasGerenciais();
+    public Account Conta { get; set; } = new Account();
     public string txtBotao { get; set; } = "Adicionar Conta Administrativa";
     public bool Disabled { get; set; } = false;
     private ClaimsPrincipal? currentUser;
@@ -86,7 +86,7 @@
                 Toast.ShowSuccess("Conta adicionada com sucesso!");
                 break;
             case (int)Enumeradores.TipoView.Apagar:
-                repCancelamento.Inserir(new CNT002_ContasExcluidas
+                repCancelamento.Inserir(new DeletedAccount
                     {
                         DataExclusao = DateTime.Now,
                         MotivoCancelamento = MotivoCancelamento,

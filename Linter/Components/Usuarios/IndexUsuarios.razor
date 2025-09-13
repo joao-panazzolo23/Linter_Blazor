@@ -1,7 +1,7 @@
 ﻿@page "/usuarios"
 @using Microsoft.AspNetCore.Authorization
 
-@inject UserManager<TAB001_Usuarios> manager
+@inject UserManager<Users> manager
 @inject TAB001_UsuariosRepositorio repositorio
 @inject NavigationManager navigations
 @inject AuthenticationStateProvider state
@@ -74,7 +74,7 @@
 
 </AuthorizeView>
 @code {
-    IQueryable<TAB001_Usuarios> queryUser { get; set; }
+    IQueryable<Users> queryUser { get; set; }
     PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
     private ClaimsPrincipal user { get; set; }
     protected override async Task OnInitializedAsync()

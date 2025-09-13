@@ -24,17 +24,17 @@ namespace Linter.Dados.Repositorios
         #endregion
 
         #region manutencao 
-        public void Inserir(CNT002_ContasExcluidas conta)
+        public void Inserir(DeletedAccount conta)
         {
             context.CNT002_ContasExcluidas.Add(conta);
             context.SaveChanges();
         }
-        public void Atualizar(CNT002_ContasExcluidas conta)
+        public void Atualizar(DeletedAccount conta)
         {
             context.CNT002_ContasExcluidas.Update(conta);
             context.SaveChanges();
         }
-        public void Remover(CNT002_ContasExcluidas conta)
+        public void Remover(DeletedAccount conta)
         {
             context.CNT002_ContasExcluidas.Remove(conta);
             context.SaveChanges();
@@ -43,7 +43,7 @@ namespace Linter.Dados.Repositorios
 
         #region Retornos
          
-        public IQueryable<CNT002_ContasExcluidas> RetornaTodasExcluidas()
+        public IQueryable<DeletedAccount> RetornaTodasExcluidas()
         {
             return context.CNT002_ContasExcluidas.AsNoTracking().AsQueryable();
         }

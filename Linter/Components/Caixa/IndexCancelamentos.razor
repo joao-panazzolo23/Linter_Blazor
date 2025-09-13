@@ -1,5 +1,5 @@
 ﻿@page "/caixa/cancelamentos"
-@inject CAX002_MovimentacoesCanceladasRepositorio rep
+@inject TransactionCancelationRepository rep
 @inject NavigationManager navigation
 @rendermode InteractiveServer
 
@@ -57,7 +57,7 @@
     </NotAuthorized>
 </AuthorizeView>
 @code {
-    public IQueryable<CAX002_MovimentaocesCanceladas> queryCanceladas;
+    public IQueryable<FinanceCancel> queryCanceladas;
 
     public PaginationState pagination { get; set; } = new PaginationState { ItemsPerPage = 10 };
     protected override Task OnInitializedAsync()

@@ -2,7 +2,7 @@
 
 @using Microsoft.AspNetCore.Identity
 
-@inject UserManager<TAB001_Usuarios> UserManager
+@inject UserManager<Users> UserManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<Disable2fa> Logger
@@ -30,7 +30,7 @@
 </div>
 
 @code {
-    private TAB001_Usuarios user = default!;
+    private Users user = default!;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;

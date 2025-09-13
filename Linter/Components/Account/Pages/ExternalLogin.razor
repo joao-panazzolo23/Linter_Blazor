@@ -7,10 +7,10 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 
-@inject SignInManager<TAB001_Usuarios> SignInManager
-@inject UserManager<TAB001_Usuarios> UserManager
-@inject IUserStore<TAB001_Usuarios> UserStore
-@inject IEmailSender<TAB001_Usuarios> EmailSender
+@inject SignInManager<Users> SignInManager
+@inject UserManager<Users> UserManager
+@inject IUserStore<Users> UserStore
+@inject IEmailSender<Users> EmailSender
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<ExternalLogin> Logger
@@ -160,26 +160,26 @@
         message = $"Error: {string.Join(",", result.Errors.Select(error => error.Description))}";
     }
 
-    private TAB001_Usuarios CreateUser()
+    private Users CreateUser()
     {
         try
         {
-            return Activator.CreateInstance<TAB001_Usuarios>();
+            return Activator.CreateInstance<Users>();
         }
         catch
         {
-            throw new InvalidOperationException($"Can't create an instance of '{nameof(TAB001_Usuarios)}'. " +
-                $"Ensure that '{nameof(TAB001_Usuarios)}' is not an abstract class and has a parameterless constructor");
+            throw new InvalidOperationException($"Can't create an instance of '{nameof(Users)}'. " +
+                $"Ensure that '{nameof(Users)}' is not an abstract class and has a parameterless constructor");
         }
     }
 
-    private IUserEmailStore<TAB001_Usuarios> GetEmailStore()
+    private IUserEmailStore<Users> GetEmailStore()
     {
         if (!UserManager.SupportsUserEmail)
         {
             throw new NotSupportedException("The default UI requires a user store with email support.");
         }
-        return (IUserEmailStore<TAB001_Usuarios>)UserStore;
+        return (IUserEmailStore<Users>)UserStore;
     }
 
     private sealed class InputModel

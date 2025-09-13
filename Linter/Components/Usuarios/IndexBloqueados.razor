@@ -55,7 +55,7 @@
 <FluentButton OnClick="@(()=> navigation.NavigateTo("/usuarios"))" IconStart="@(new Icons.Regular.Size16.ArrowStepBack())"> Voltar </FluentButton> *@
 
 @code {
-    public IQueryable<TAB001_Usuarios> UsuariosBloqueados { get; set; }
+    public IQueryable<Users> UsuariosBloqueados { get; set; }
     public int id { get; set; }
     public PaginationState pagination { get; set; } = new PaginationState { ItemsPerPage = 10 };
     string nomeFiltro = string.Empty;

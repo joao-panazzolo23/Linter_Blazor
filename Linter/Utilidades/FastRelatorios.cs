@@ -46,7 +46,7 @@ namespace Linter.Utilidades
             }
         }
 
-        public byte[] GerarListagemDeUsuarios(IEnumerable<TAB001_Usuarios> usuarios, string nomeRelatorio)
+        public byte[] GerarListagemDeUsuarios(IEnumerable<Users> usuarios, string nomeRelatorio)
         {
             var filepath = Path.Combine(Directory.GetCurrentDirectory(), "Relatorios", "Usuarios", $"{nomeRelatorio}.frx");
             var diretorio = Path.GetDirectoryName(filepath);

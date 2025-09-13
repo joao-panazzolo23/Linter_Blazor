@@ -1,8 +1,8 @@
 ﻿@page "/caixa/{acao:int}/{id:int}"
 @using Linter.Components.ComponentesLDN
 @rendermode InteractiveServer
-@inject CAX001_MovimentacoesRepositorio repositorio
-@inject CAX002_MovimentacoesCanceladasRepositorio repCancelados
+@inject TransactionRepository repositorio
+@inject TransactionCancelationRepository repCancelados
 @inject NavigationManager navigation
 
 
@@ -100,11 +100,11 @@
             switch (acao)
             {
                 case (int)Enumeradores.TipoView.Criar:
-                    repositorio.InserirMovimentacao(objMovi);
+                    repositorio.Insert(objMovi);
                     Toast.ShowCustom("Registro cadastrado com sucesso!", null, null, null, (new Icons.Regular.Size24.AddCircle(), Color.Accent));
                     break;
                 case (int)Enumeradores.TipoView.Editar:
-                    await repositorio.EditarMovimentacao(objMovi);
+                    await repositorio.Update(objMovi);
                     Toast.ShowCustom("Registro cadastrado com sucesso!", null, null, null, (new Icons.Regular.Size24.AddCircle(), Color.Accent));
                     break;
                 case (int)Enumeradores.TipoView.Apagar:
@@ -116,7 +116,7 @@
                     if (!result.Cancelled)
                     {
 
-                        repositorio.ExcluirMovimentacao(id);
+                        repositorio.Delete(id);
                         Toast.ShowCustom("Exclusão confirmada com sucesso!", 10000, "100", null, (new Icons.Regular.Size24.Delete(), Color.Accent));
                     }
                     break;

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Linter.Components.Account
 {
-    internal sealed class IdentityUserAccessor(UserManager<TAB001_Usuarios> userManager, IdentityRedirectManager redirectManager)
+    internal sealed class IdentityUserAccessor(UserManager<Users> userManager, IdentityRedirectManager redirectManager)
     {
-        public async Task<TAB001_Usuarios> GetRequiredUserAsync(HttpContext context)
+        public async Task<Users> GetRequiredUserAsync(HttpContext context)
         {
             var user = await userManager.GetUserAsync(context.User);
 

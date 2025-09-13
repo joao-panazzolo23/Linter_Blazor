@@ -6,8 +6,8 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 
-@inject UserManager<TAB001_Usuarios> UserManager
-@inject IEmailSender<TAB001_Usuarios> EmailSender
+@inject UserManager<Users> UserManager
+@inject IEmailSender<Users> EmailSender
 @inject IdentityUserAccessor UserAccessor
 @inject NavigationManager NavigationManager
 
@@ -44,7 +44,7 @@
 
 @code {
     private string? message;
-    private TAB001_Usuarios user = default!;
+    private Users user = default!;
     private string? email;
     private bool isEmailConfirmed;
 

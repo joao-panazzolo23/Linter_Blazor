@@ -1,13 +1,13 @@
 ﻿@page "/caixa"
 @rendermode InteractiveServer
-@inject Dados.Repositorios.CAX001_MovimentacoesRepositorio repositorio
+@inject Dados.Repositorios.TransactionRepository repositorio
 @inject ToastService Toast
 @inject IDialogService dialogservice
 
 @using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
 @inject AuthenticationStateProvider authenticate
-@inject UserManager<TAB001_Usuarios> usermanager
+@inject UserManager<Users> usermanager
 
 
 @* @attribute [Authorize(Roles = "Administrador")] *@
@@ -37,7 +37,7 @@
                     <FluentIcon Value="@(new Icons.Filled.Size16.CalendarEmpty())" Color="@Color.Accent" />&nbsp; Nenhum registro para ser exibido!
                 </EmptyContent>
                 <ChildContent>
-                    <PropertyColumn InitialSortDirection="SortDirection.Descending" Property="@(p=> p.idMovimentacao)" Sortable="true" Title="ID" IsDefaultSortColumn="true">
+                    <PropertyColumn InitialSortDirection="SortDirection.Descending" Property="@(p=> p.Id)" Sortable="true" Title="ID" IsDefaultSortColumn="true">
                         @*  <ColumnOptions>
                         <div class="search-box">
                         <FluentSearch type="search" Autofocus=true Placeholder="ID..." @bind-Value=idFiltro @oninput="Filtrar" @bind-Value:after="Limpar" />
@@ -59,8 +59,8 @@
                     </PropertyColumn>
 
                     <TemplateColumn Title="Ações" Context="mov">
-                        <AuthorizeButton Action="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Editar}/{mov.idMovimentacao}"))" Icone="@(new Icons.Regular.Size16.Edit())" Titulo="Editar"></AuthorizeButton>
-                        <AuthorizeButton Action="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Apagar}/{mov.idMovimentacao}"))" Icone="@(new Icons.Regular.Size16.Delete())" Titulo="Excluir"></AuthorizeButton>
+                        <AuthorizeButton Action="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Editar}/{mov.Id}"))" Icone="@(new Icons.Regular.Size16.Edit())" Titulo="Editar"></AuthorizeButton>
+                        <AuthorizeButton Action="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Apagar}/{mov.Id}"))" Icone="@(new Icons.Regular.Size16.Delete())" Titulo="Excluir"></AuthorizeButton>
                     </TemplateColumn>
                 </ChildContent>
 

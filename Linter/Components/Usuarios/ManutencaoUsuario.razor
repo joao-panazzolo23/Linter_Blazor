@@ -8,10 +8,10 @@
 @inject TAB001_UsuariosRepositorio rep
 @rendermode InteractiveServer
 
-@inject UserManager<TAB001_Usuarios> UserManager
-@inject IUserStore<TAB001_Usuarios> UserStore
-@inject SignInManager<TAB001_Usuarios> SignInManager
-@inject IEmailSender<TAB001_Usuarios> EmailSender
+@inject UserManager<Users> UserManager
+@inject IUserStore<Users> UserStore
+@inject SignInManager<Users> SignInManager
+@inject IEmailSender<Users> EmailSender
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 
@@ -94,7 +94,7 @@
 <br />
 
 @code {
-    public TAB001_Usuarios usuario { get; set; }
+    public Users usuario { get; set; }
     [Parameter]
     public Enumeradores.TipoView tipoView { get; set; }
     public Enumeradores.Cidades Cidades { get; set; }
@@ -119,7 +119,7 @@
 
     public List<Claim> claims = new List<Claim>();
 
-    public TAB001_Usuarios Usuario { get; set; } = new TAB001_Usuarios();
+    public Users Usuario { get; set; } = new Users();
 
     protected async override Task OnInitializedAsync()
     {

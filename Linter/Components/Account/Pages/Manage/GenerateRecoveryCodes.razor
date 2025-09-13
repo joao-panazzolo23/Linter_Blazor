@@ -1,7 +1,7 @@
 ﻿@page "/Account/Manage/GenerateRecoveryCodes"
 
 @using Microsoft.AspNetCore.Identity
-@inject UserManager<TAB001_Usuarios> UserManager
+@inject UserManager<Users> UserManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<GenerateRecoveryCodes> Logger
@@ -38,7 +38,7 @@ else
 
 @code {
     private string? message;
-    private TAB001_Usuarios user = default!;
+    private Users user = default!;
     private IEnumerable<string>? recoveryCodes;
 
     [CascadingParameter]

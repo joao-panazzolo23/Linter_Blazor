@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Linter.Modelos.Modelos
 {
-    public class CAX002_MovimentaocesCanceladas
+    public class FinanceCancel
     {
         [ForeignKey("pk_cax001_movimentacoescaixa")]
         public int idMovimentacao { get; set; }

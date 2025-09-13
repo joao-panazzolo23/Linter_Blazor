@@ -8,13 +8,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
-using Npgsql;
 using Microsoft.FluentUI.AspNetCore.Components.Components.Tooltip;
-using Microsoft.JSInterop;
-using FastReport.Utils;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +36,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                  throw new InvalidOperationException("String de conexão 'DefaultConnection' não foi encontrada.");
 
 // essa string serve pra usar o sql server
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>  
 //    options.UseSqlServer(connectionString));
 
 builder.Services.AddServerSideBlazor(option =>
@@ -80,7 +75,7 @@ builder.Services.AddAuthenticationCore();
 
 
 //isso aq n ta funcionando
-builder.Services.AddIdentityCore<TAB001_Usuarios>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddIdentityCore<Users>(options => options.SignIn.RequireConfirmedAccount = false)
                 //.AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager()
@@ -103,18 +98,18 @@ using (var scope = builder.Services.BuildServiceProvider().CreateScope())
 
 #region Singletons
 builder.Services.AddSingleton<ToastService>();
-builder.Services.AddSingleton<IEmailSender<TAB001_Usuarios>, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<IEmailSender<Users>, IdentityNoOpEmailSender>();
 //builder.Services.AddScoped<RoleManager<IdentityRole>>();
 //builder.Services.AddScoped<IdentityRole>();
 
 #endregion
 
 #region Transients
-builder.Services.AddTransient<CAX001_MovimentacoesRepositorio>();
-builder.Services.AddTransient<CAX002_MovimentacoesCanceladasRepositorio>();
-builder.Services.AddTransient<CNT001_ContasGerenciaisRepositorio>();
+builder.Services.AddTransient<TransactionRepository>();
+builder.Services.AddTransient<TransactionCancelationRepository>();
+builder.Services.AddTransient<DeletedAccountRepository>();
 builder.Services.AddTransient<CNT002_ContasExcluidasRepositorio>();
-builder.Services.AddTransient<TAB002_CargosRepositorio>();
+builder.Services.AddTransient<RoleRepository>();
 #endregion
 
 #region Scopeds

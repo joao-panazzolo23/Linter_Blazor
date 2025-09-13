@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Linter.Modelos.Modelos
 {
-    public class CNT002_ContasExcluidas
+    public class DeletedAccount
     {
         [Key]
         public int idContaGerencial { get; set; }

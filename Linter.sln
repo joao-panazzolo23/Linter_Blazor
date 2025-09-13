@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linter", "Linter\Linter.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linter.Modelos", "Linter.Modelos\Linter.Modelos.csproj", "{2706111E-D0D9-4361-BE5F-F6B795747D42}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linter.Dados", "Linter.Repositorio\Linter.Dados.csproj", "{C0CFAC4A-92CA-43B5-8D94-D3EAD361BE26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linter.Infraestructure", "Linter.Repositorio\Linter.Infraestructure.csproj", "{C0CFAC4A-92CA-43B5-8D94-D3EAD361BE26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

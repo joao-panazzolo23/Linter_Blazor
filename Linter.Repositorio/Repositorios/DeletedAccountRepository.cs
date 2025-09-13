@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Linter.Dados.Repositorios
 {
-    public class CNT001_ContasGerenciaisRepositorio
+    public class DeletedAccountRepository
     {
         #region Propriedades
         public ApplicationDbContext context;
@@ -17,28 +17,28 @@ namespace Linter.Dados.Repositorios
         #endregion
 
         #region Construtores
-        public CNT001_ContasGerenciaisRepositorio()
+        public DeletedAccountRepository()
         {
             context = new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>());
         }
-        public CNT001_ContasGerenciaisRepositorio(ApplicationDbContext _contexto)
+        public DeletedAccountRepository(ApplicationDbContext _contexto)
         {
             context = _contexto;
         }
         #endregion
 
         #region manutencao 
-        public void Inserir(CNT001_ContasGerenciais contasGerenciais)
+        public void Inserir(Account contasGerenciais)
         {
             context.CNT001_ContasGerenciais.Add(contasGerenciais);
             context.SaveChanges();
         }
-        public void Atualizar(CNT001_ContasGerenciais contasGerenciais)
+        public void Atualizar(Account contasGerenciais)
         {
             context.CNT001_ContasGerenciais.Update(contasGerenciais);
             context.SaveChanges();
         }
-        public void Remover(CNT001_ContasGerenciais contasGerenciais)
+        public void Remover(Account contasGerenciais)
         {
             context.CNT001_ContasGerenciais.Remove(contasGerenciais);
             context.SaveChanges();
@@ -46,7 +46,7 @@ namespace Linter.Dados.Repositorios
         #endregion
 
         #region retornos 
-        public IQueryable<CNT001_ContasGerenciais> RetornaContasGerenciais()
+        public IQueryable<Account> RetornaContasGerenciais()
         {
             if (context == null || context.CNT001_ContasGerenciais == null)
                 throw new ApplicationException("Erro ao retornar as contas gerenciais.");
@@ -54,7 +54,7 @@ namespace Linter.Dados.Repositorios
             return context.CNT001_ContasGerenciais.AsNoTracking().AsQueryable();
         }
 
-        public CNT001_ContasGerenciais RetornaConta(int id)
+        public Account RetornaConta(int id)
         {
             if (context == null || context.CNT001_ContasGerenciais == null)
                 throw new ApplicationException("Erro ao retornar esta conta.");

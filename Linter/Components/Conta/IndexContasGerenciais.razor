@@ -1,7 +1,7 @@
 ﻿@page "/contasgerenciais"
 @inject NavigationManager navigation
 @rendermode InteractiveServer
-@inject CNT001_ContasGerenciaisRepositorio repositorio
+@inject DeletedAccountRepository repositorio
 
 <PageTitle> Contas Gerenciais </PageTitle>
 
@@ -61,8 +61,8 @@
     public Enumeradores.TipoView tipoView { get; set; }
     [Parameter] public int idMovimentacao { get; set; } = 0;
     public Enumeradores.TipoMovimentacao? tipomov { get; set; }
-    [SupplyParameterFromForm] public CNT001_ContasGerenciais contasGerenciais { get; set; } = new CNT001_ContasGerenciais();
-    public IQueryable<CNT001_ContasGerenciais> queryConta;
+    [SupplyParameterFromForm] public Account contasGerenciais { get; set; } = new Account();
+    public IQueryable<Account> queryConta;
     PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
 
     protected override async Task<IQueryable> OnInitializedAsync()

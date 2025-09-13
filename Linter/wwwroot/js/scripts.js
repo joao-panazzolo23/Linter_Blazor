@@ -99,7 +99,7 @@ function animarNumero(id, valorFinal, duracao) {
             }
         });
     }, {
-        threshold: 0.2  // Certifica-se de que o elemento está totalmente visível
+        threshold: 0.2  // Certifica-se de que o elemento ta pelo menos 20% visível
     });
 
     // Começa a observar o elemento
@@ -135,13 +135,14 @@ function MostraDivBaixoClasse(classe) {
     });
 }
 //inicializando o sweeper
-function CreateSweeper(classe) {
+function CreateSweeper() {
 
-    const swiper = new Swiper(`.${classe}`, {
+    const swiper = new Swiper(`.swiper`, {
+        slidesPerView: 3,
         //deixa a rolagem infinita
         loop: true,
         //deixa que o usuario arraste o carrossel com o mouse apertando m1
-        grabCursos: true,
+        grabCursor: true,
         //adiciona os botoes de controle
         navigation: {
             nextEl: ".swiper-button-next",
@@ -154,17 +155,17 @@ function CreateSweeper(classe) {
         },
         //esses breakpoints aqui definem o quão grande vao ficar esses cards quando a tela for redimensionada
         breakpoints: {
-            // when window width is >= 320px
+            // when window width is >= 640
             640: {
                 slidesPerView: 1,
                 spaceBetween: 18
             },
-            // when window width is >= 480px
+            // when window width is >= 768
             768: {
                 slidesPerView: 2,
                 spaceBetween: 18
             },
-            // when window width is >= 640px
+            // when window width is >= 1188
             1188: {
                 slidesPerView: 3,
                 spaceBetween: 24
@@ -172,5 +173,5 @@ function CreateSweeper(classe) {
         }
 
     });
-    console.log("chegou hein")
+    console.log(document.querySelector(`.${classe}`));
 }

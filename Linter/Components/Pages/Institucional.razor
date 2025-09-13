@@ -6,382 +6,522 @@
 
 <script defer src="/js/scripts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+	  integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+	  crossorigin="anonymous"
+	  referrerpolicy="no-referrer" />
 
 <PageTitle> Institucional </PageTitle>
 
 <style>
-    .btn-animated {
-        background: transparent;
-        color: #0078d4;
-        border: 2px solid #0078d4;
-        padding: 12px 24px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 6px;
-        position: relative;
-        transition: all 1s ease-in-out;
-        box-shadow: 8px 8px 4px 1px;
-    }
+	.btn-animated {
+		background: transparent;
+		color: #0078d4;
+		border: 2px solid #0078d4;
+		padding: 12px 24px;
+		font-size: 16px;
+		cursor: pointer;
+		border-radius: 6px;
+		position: relative;
+		transition: all 1s ease-in-out;
+		box-shadow: 8px 8px 4px 1px;
+	}
 
-        .btn-animated:hover {
-            background-color: #b0d6eb;
-            color: black;
-            border: 2px solid #0078d4;
-            padding: 12px 24px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 6px;
-            position: relative;
-            transition: all 0.5s ease-in-out;
-            /* offset-x | offset-y | blur-radius | spread-radius | color */
-            box-shadow: 12px 12px 4px 1px rgba(0, 0, 255, .1);
-        }
+		.btn-animated:hover {
+			background-color: #b0d6eb;
+			color: black;
+			border: 2px solid #0078d4;
+			padding: 12px 24px;
+			font-size: 16px;
+			cursor: pointer;
+			border-radius: 6px;
+			position: relative;
+			transition: all 0.5s ease-in-out;
+			/* offset-x | offset-y | blur-radius | spread-radius | color */
+			box-shadow: 12px 12px 4px 1px rgba(0, 0, 255, .1);
+		}
 
-    .btn-bordered:hover {
-        background: #0078d4;
-        color: white;
-    }
+	.btn-bordered:hover {
+		background: #0078d4;
+		color: white;
+	}
 
-    /*     .header { isso aq tava conflitando com o mainlayout
-                                                                                                background: #0078d4;
-                                                                                                color: white;
-                                                                                                padding: 16px;
-                                                                                                text-align: center;
-                                                                                                font-size: 24px;
-                                                                                                font-weight: bold;
-                                                                                            } */
+	/*     .header { isso aq tava conflitando com o mainlayout
+																																																																													background: #0078d4;
+																																																																													color: white;
+																																																																													padding: 16px;
+																																																																													text-align: center;
+																																																																													font-size: 24px;
+																																																																													font-weight: bold;
+																																																																												} */
 
-    .hero {
-        color: white;
-        text-align: center;
-        /*em cima // esquerda e direita // pra baixo  */
-        padding: 100px 20px 100px;
-    }
+	.hero {
+		color: white;
+		text-align: center;
+		/*em cima // esquerda e direita // pra baixo  */
+		padding: 100px 20px 100px;
+	}
 
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
-            color: black;
-        }
+		.hero h1 {
+			font-size: 48px;
+			margin-bottom: 10px;
+			color: black;
+		}
 
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: black;
-        }
+		.hero p {
+			font-size: 20px;
+			margin-bottom: 20px;
+			color: black;
+		}
 
-        .hero .btn {
-            background: #fff;
-            color: #0078d4;
-            padding: 12px 24px;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+		.hero .btn {
+			background: #fff;
+			color: #0078d4;
+			padding: 12px 24px;
+			border: none;
+			font-size: 18px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
 
-    .section {
-        padding: 50px 20px;
-        text-align: center;
-        background: white;
-        margin: 20px;
-        border-radius: 10px;
-        box-shadow: 2px 5px 10px rgba(0,0,0,0.7);
-    }
+	.section {
+		padding: 50px 20px;
+		text-align: center;
+		background: white;
+		margin: 20px;
+		border-radius: 10px;
+		box-shadow: 2px 5px 10px rgba(0,0,0,0.7);
+	}
 
-        .section h2 {
-            color: #0078d4;
-            font-size: 32px;
-        }
+		.section h2 {
+			color: #0078d4;
+			font-size: 32px;
+		}
 
-    .atras {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
+	.atras {
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
 
-    .feature {
-        background: #f3f3f3;
-        padding: 20px;
-        border-radius: 10px;
-        width: 250px;
-        text-align: center;
-    }
+	.feature {
+		background: #f3f3f3;
+		padding: 20px;
+		border-radius: 10px;
+		width: 250px;
+		text-align: center;
+	}
 
-        .feature i {
-            font-size: 50px;
-            color: #0078d4;
-        }
+		.feature i {
+			font-size: 50px;
+			color: #0078d4;
+		}
 
-    .footer {
-        background: #333;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        margin-top: 30px;
-    }
-
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .right {
-        flex: 1;
-        background-color: #ffffff;
-        border-top-left-radius: 50px;
-        border-bottom-left-radius: 50px;
-        box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.2);
-    }
+	.footer {
+		background: #333;
+		color: white;
+		text-align: center;
+		padding: 20px;
+		margin-top: 30px;
+	}
 
 
-    .container {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-    }
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	.right {
+		flex: 1;
+		background-color: #ffffff;
+		border-top-left-radius: 50px;
+		border-bottom-left-radius: 50px;
+		box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.2);
+	}
 
 
-    .left {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .text-box {
-        max-width: 500px;
-        text-align: justify;
-    }
-
-    h2 {
-        text-align: center;
-        font-size: 2rem;
-        margin-bottom: 10px;
-    }
-
-    p {
-        font-size: 1.2rem;
-    }
-
-    .right {
-        flex: 1;
-        background-image: url('/recursos/imagens/reuniao.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        border-top-left-radius: 50px;
-        border-bottom-left-radius: 50px;
-        box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.2);
-        position: relative;
-        opacity: 0;
-        transition: opacity 2s ease-in-out;
-    }
-
-        .right::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-top-left-radius: 50px;
-            border-bottom-left-radius: 50px;
-        }
-
-    .fade-in {
-        animation: fadeIn 1s forwards;
-    }
+	.container {
+		display: flex;
+		width: 100vw;
+		height: 100vh;
+	}
 
 
-    .image {
-        max-width: 90%;
-        max-height: 90%;
-    }
+	.left {
+		flex: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 20px;
+	}
 
-    .text {
-        font-size: 24px;
-        color: #333;
-        text-align: center;
-    }
+	.text-box {
+		max-width: 500px;
+		text-align: justify;
+	}
 
-    /* testes do js */
-    section {
-        display: grid;
-        place-items: center;
-    }
+	h2 {
+		text-align: center;
+		font-size: 2rem;
+		margin-bottom: 10px;
+	}
 
-    .hidden {
-        opacity: 0;
-        filter: blur(5px);
-        transition: all 1s;
-        transform: translateX(-100%);
-    }
+	p {
+		font-size: 1.2rem;
+	}
 
-    .hidden-left {
-        opacity: 0;
-        filter: blur(5px);
-        transition: all 1s;
-        transform: translateX(150%);
-    }
+	.right {
+		flex: 1;
+		background-image: url('/recursos/imagens/reuniao.jpg');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		border-top-left-radius: 50px;
+		border-bottom-left-radius: 50px;
+		box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.2);
+		position: relative;
+		opacity: 0;
+		transition: opacity 2s ease-in-out;
+	}
 
-    .show {
-        opacity: 1;
-        filter: blur(0);
-        transform: translateX(0);
-    }
+		.right::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			border-top-left-radius: 50px;
+			border-bottom-left-radius: 50px;
+		}
 
-    .hidden-lower {
-        opacity: 0;
-        filter: blur(5px);
-        transition: all 1s;
-        transform: translateY(-100%);
-    }
-
-    .baixo {
-        opacity: 0;
-        transform: translateY(100px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-        .baixo.visible {
-            opacity: 0.9;
-            transform: translateX(0);
-        }
+	.fade-in {
+		animation: fadeIn 1s forwards;
+	}
 
 
-    .card-foreset {
-        background-color: silver;
-        background-image: radial-gradient(circle at 100% 150%, silver 24%, white 24%, white 28%, silver 28%, silver 36%, white 36%, white 40%, transparent 40%, transparent), radial-gradient(circle at 0 150%, silver 24%, white 24%, white 28%, silver 28%, silver 36%, white 36%, white 40%, transparent 40%, transparent), radial-gradient(circle at 50% 100%, white 10%, silver 10%, silver 23%, white 23%, white 30%, silver 30%, silver 43%, white 43%, white 50%, silver 50%, silver 63%, white 63%, white 71%, transparent 71%, transparent), radial-gradient(circle at 100% 50%, white 5%, silver 5%, silver 15%, white 15%, white 20%, silver 20%, silver 29%, white 29%, white 34%, silver 34%, silver 44%, white 44%, white 49%, transparent 49%, transparent), radial-gradient(circle at 0 50%, white 5%, silver 5%, silver 15%, white 15%, white 20%, silver 20%, silver 29%, white 29%, white 34%, silver 34%, silver 44%, white 44%, white 49%, transparent 49%, transparent);
-        background-size: 100px 50px;
-    }
+	.image {
+		max-width: 90%;
+		max-height: 90%;
+	}
+
+	.text {
+		font-size: 24px;
+		color: #333;
+		text-align: center;
+	}
+
+	/* testes do js */
+	section {
+		display: grid;
+		place-items: center;
+	}
+
+	.hidden {
+		opacity: 0;
+		filter: blur(5px);
+		transition: all 1s;
+		transform: translateX(-100%);
+	}
+
+	.hidden-left {
+		opacity: 0;
+		filter: blur(5px);
+		transition: all 1s;
+		transform: translateX(150%);
+	}
+
+	.show {
+		opacity: 1;
+		filter: blur(0);
+		transform: translateX(0);
+	}
+
+	.hidden-lower {
+		opacity: 0;
+		filter: blur(5px);
+		transition: all 1s;
+		transform: translateY(-100%);
+	}
+
+	.baixo {
+		opacity: 0;
+		transform: translateY(100px);
+		transition: opacity 0.5s ease, transform 0.5s ease;
+	}
+
+		.baixo.visible {
+			opacity: 0.9;
+			transform: translateX(0);
+		}
+
+
+	.card-foreset {
+		background-color: silver;
+		background-image: radial-gradient(circle at 100% 150%, silver 24%, white 24%, white 28%, silver 28%, silver 36%, white 36%, white 40%, transparent 40%, transparent), radial-gradient(circle at 0 150%, silver 24%, white 24%, white 28%, silver 28%, silver 36%, white 36%, white 40%, transparent 40%, transparent), radial-gradient(circle at 50% 100%, white 10%, silver 10%, silver 23%, white 23%, white 30%, silver 30%, silver 43%, white 43%, white 50%, silver 50%, silver 63%, white 63%, white 71%, transparent 71%, transparent), radial-gradient(circle at 100% 50%, white 5%, silver 5%, silver 15%, white 15%, white 20%, silver 20%, silver 29%, white 29%, white 34%, silver 34%, silver 44%, white 44%, white 49%, transparent 49%, transparent), radial-gradient(circle at 0 50%, white 5%, silver 5%, silver 15%, white 15%, white 20%, silver 20%, silver 29%, white 29%, white 34%, silver 34%, silver 44%, white 44%, white 49%, transparent 49%, transparent);
+		background-size: 100px 50px;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	.author-profile img {
+		width: 20px;
+		height: 20px;
+	}
+
+	#enterprises-rate {
+		min-height: 100vh;
+		background-color: #f9fafb;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	#enterprises_header {
+		text-align: center;
+	}
+
+		#enterprises_header h1 {
+			font-size: 18px;
+			font-weight: 600;
+			color: dodgerblue;
+		}
+
+		#enterprises_header h2 {
+			color: #111928;
+			font: 40px;
+		}
+
+		#enterprises_header p {
+			color: #637381;
+		}
+
 </style>
 
 <div class="hero hidden">
-    <h1 class="linterTexto baixo" id="Linter" style="font-size:100px; padding:3rem"> Linter </h1>
-    <h1>Gerencie suas movimentações com eficiência</h1>
-    <p>Simplifique a gestão de transações e tenha controle total</p>
-    <button class="btn-animated" onclick="@(() => Navegar())"> Comece agora </button>
+	<h1 class="linterTexto baixo" id="Linter" style="font-size:100px; padding:3rem"> Linter </h1>
+	<h1>Gerencie suas movimentações com eficiência</h1>
+	<p>Simplifique a gestão de transações e tenha controle total</p>
+	<button class="btn-animated" onclick="@(() => Navegar())"> Comece agora </button>
 </div>
 
 <section style="padding-bottom:6rem;">
-    <h2 style="color:black" class="hidden-left"> Principais Recursos </h2>
-    <div class="atras">
-        <FluentCard class="feature hidden-left numberDisplay">
-            <i class="ms-Icon ms-Icon--Money" aria-hidden="true"></i>
-            <h3 class="baixo">Controle Financeiro</h3>
-            <p>Acompanhe suas receitas e despesas de forma clara.</p>
-        </FluentCard>
+	<h2 style="color:black" class="hidden-left"> Principais Recursos </h2>
+	<div class="atras">
+		<FluentCard class="feature hidden-left numberDisplay">
+			<i class="ms-Icon ms-Icon--Money" aria-hidden="true"></i>
+			<h3 class="baixo">Controle Financeiro</h3>
+			<p>Acompanhe suas receitas e despesas de forma clara.</p>
+		</FluentCard>
 
-        <FluentCard class="feature hidden-left numberDisplay">
-            <i class="ms-Icon ms-Icon--Chart" aria-hidden="true"></i>
-            <h3 class="baixo">Relatórios Detalhados</h3>
-            <p>Gere relatórios completos para análise estratégica.</p>
-        </FluentCard>
+		<FluentCard class="feature hidden-left numberDisplay">
+			<i class="ms-Icon ms-Icon--Chart" aria-hidden="true"></i>
+			<h3 class="baixo">Relatórios Detalhados</h3>
+			<p>Gere relatórios completos para análise estratégica.</p>
+		</FluentCard>
 
-        <FluentCard class="feature hidden-left numberDisplay">
-            <i class="ms-Icon ms-Icon--Shield" aria-hidden="true"></i>
-            <h3 class="baixo">Segurança Garantida</h3>
-            <p>Seus dados protegidos com criptografia avançada.</p>
-        </FluentCard>
-    </div>
+		<FluentCard class="feature hidden-left numberDisplay">
+			<i class="ms-Icon ms-Icon--Shield" aria-hidden="true"></i>
+			<h3 class="baixo">Segurança Garantida</h3>
+			<p>Seus dados protegidos com criptografia avançada.</p>
+		</FluentCard>
+	</div>
 </section>
 <br />
 
 <div class="container ">
-    <div class="left hidden">
-        <div class="text-box">
-            <h3> Confiança e praticidade em um só lugar</h3>
-            <div>
-                O <strong>Linter</strong> é a solução ideal para empresas que buscam controle financeiro eficiente e descomplicado.
-                Com uma interface intuitiva e ferramentas avançadas, garantimos um sistema confiável e com alto desempenho que
-                que contribui às empresas a organizarem suas finanças,
-                gerenciarem receitas e despesas e tomarem decisões estratégicas com segurança.
-            </div>
-        </div>
-    </div>
-    <div class="right fade-in hidden"></div>
+	<div class="left hidden">
+		<div class="text-box">
+			<h3> Confiança e praticidade em um só lugar</h3>
+			<div>
+				O <strong>Linter</strong> é a solução ideal para empresas que buscam controle financeiro eficiente e descomplicado.
+				Com uma interface intuitiva e ferramentas avançadas, garantimos um sistema confiável e com alto desempenho que
+				que contribui às empresas a organizarem suas finanças,
+				gerenciarem receitas e despesas e tomarem decisões estratégicas com segurança.
+			</div>
+		</div>
+	</div>
+	<div class="right fade-in hidden"></div>
 </div>
 
 <br />
+
 @* AQUI VAO FICAR OS TESTES DO SWIPER JS *@
 
 
 <main id="enterprises">
-    <div id="enterprises_header">
-        <h1> Nossas empresas parceiras </h1>
-        <h2> Ouça a opinião de quem usa.</h2>
-        <p>Algumas opiniões das mais de 50 empresas que fizeram parte da nossa trajetória ao longo de mais de 15 anos de história.</p>
+	<div id="enterprises_header">
+		<h1> Nossas empresas parceiras </h1>
+		<h2> Ouça a opinião de quem usa.</h2>
+		<p>Algumas opiniões das mais de 50 empresas que fizeram parte da nossa trajetória ao longo de mais de 15 anos de história.</p>
+	</div>
 
-    </div>
+	<div class="swiper">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<div class="enterprises-rate">
+					<i class="fa-solid fa-star"></i>
+					<i class="fa-solid fa-star"></i>
+					<i class="fa-solid fa-star"></i>
+					<i class="fa-solid fa-star"></i>
+					<i class="fa-solid fa-star"></i>
+				</div>
+				<blockquote>
+					"Depois que implementamos o Linter em todas as nossas filiais, o rendimento dos funcionários aumentou consideravelmente.
+					Antes, eramos uma empresa desorganizada e nem sabiamos disso. Com a praticidade e aplicabilidade desse novo sistema, a LDN chegou em outro
+					patamar como empresa. Não trocaria por nada!"
+				</blockquote>
+				<div class="author-profile">
+					<img src="/imagens/empresas/apple.jpg" />
+				</div>
+				<div class="author-info">  </div>
 
-    <div class="swiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide">
-                Slide 1
-                <div class="enterprises-rate">
-                    <FluentIcon Value="@(new Microsoft.FluentUI.AspNetCore.Components.Icons.Filled.Size20.Star())" />
-                    <FluentIcon Value="@(new Microsoft.FluentUI.AspNetCore.Components.Icons.Filled.Size20.Star())" />
-                    <FluentIcon Value="@(new Microsoft.FluentUI.AspNetCore.Components.Icons.Filled.Size20.Star())" />
-                    <FluentIcon Value="@(new Microsoft.FluentUI.AspNetCore.Components.Icons.Filled.Size20.Star())" />
-                    <FluentIcon Value="@(new Microsoft.FluentUI.AspNetCore.Components.Icons.Filled.Size20.Star())" />
-                </div>
-                <blockquote>
-                    "Depois que implementamos o Linter em todas as nossas filiais, o rendimento dos funcionários aumentou consideravelmente.
-                    Antes, eramos uma empresa desorganizada e nem sabiamos disso. Com a praticidade e aplicabilidade desse novo sistema, a LDN chegou em outro
-                    patamar como empresa. Não trocaria por nada!"
-                </blockquote>
-            </div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
-        </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
+				<h3> Apple</h3>
+				<p> Cliente desde 2022 </p>
 
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+			</div>
 
-        <!-- If we need scrollbar -->
-        <div class="swiper-scrollbar"></div>
-    </div>
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<div class="enterprises-rate">
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+					</div>
+					<blockquote>
+						"Depois que implementamos o Linter em todas as nossas filiais, o rendimento dos funcionários aumentou consideravelmente.
+						Antes, eramos uma empresa desorganizada e nem sabiamos disso. Com a praticidade e aplicabilidade desse novo sistema, a LDN chegou em outro
+						patamar como empresa. Não trocaria por nada!"
+					</blockquote>
+					<div class="author-profile">
+						<img src="/imagens/empresas/hawlett-packard.jpg" />
+					</div>
+					<div class="author-info">  </div>
 
+					<h3> Hawlett-Packard</h3>
+					<p> Cliente desde 2022 </p>
+
+				</div>
+
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="enterprises-rate">
+							<i class="fa-solid fa-star"></i>
+							<i class="fa-solid fa-star"></i>
+							<i class="fa-solid fa-star"></i>
+							<i class="fa-solid fa-star"></i>
+							<i class="fa-solid fa-star"></i>
+							<blockquote>
+								"Depois que implementamos o Linter em todas as nossas filiais, o rendimento dos funcionários aumentou consideravelmente.
+								Antes, eramos uma empresa desorganizada e nem sabiamos disso. Com a praticidade e aplicabilidade desse novo sistema, a LDN chegou em outro
+								patamar como empresa. Não trocaria por nada!"
+							</blockquote>
+							<div class="author-profile">
+								<img src="/imagens/empresas/ibm.jpg" />
+							</div>
+							<div class="author-info">  </div>
+
+							<h3> IBM </h3>
+							<p> Cliente desde 2020 </p>
+
+						</div>
+					</div>
+
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<div class="enterprises-rate">
+								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star"></i>
+							</div>
+							<blockquote>
+								"Depois que implementamos o Linter em todas as nossas filiais, o rendimento dos funcionários aumentou consideravelmente.
+								Antes, eramos uma empresa desorganizada e nem sabiamos disso. Com a praticidade e aplicabilidade desse novo sistema, a LDN chegou em outro
+								patamar como empresa. Não trocaria por nada!"
+							</blockquote>
+							<div class="author-profile">
+								<img src="/imagens/empresas/ibm.jpg" />
+							</div>
+							<div class="author-info">  </div>
+
+							<h3> Apple</h3>
+							<p> Cliente desde 2022 </p>
+
+						</div>
+					</div>
+
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<div class="enterprises-rate">
+								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star"></i>
+							</div>
+							<blockquote>
+								"Depois que implementamos o Linter em todas as nossas filiais, o rendimento dos funcionários aumentou consideravelmente.
+								Antes, eramos uma empresa desorganizada e nem sabiamos disso. Com a praticidade e aplicabilidade desse novo sistema, a LDN chegou em outro
+								patamar como empresa. Não trocaria por nada!"
+							</blockquote>
+							<div class="author-profile">
+								<img src="/imagens/empresas/oracle.jpg" />
+							</div>
+							<div class="author-info">  </div>
+
+							<h3> Oracle </h3>
+							<p> Cliente desde 2019 </p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="swiper-pagination"></div>
+
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+
+			<div class="swiper-scrollbar"></div>
+		</div>
+
+	</div>
 </main>
 
-
-
-
 <section>
-    <h2 style="color:black" class="hidden-left"> Principais Recursos </h2>
-    <div class="atras">
-        <FluentCard class="feature hidden-left numero">
-            <p> Desde </p>
-            <i class="ms-Icon ms-Icon--Money" aria-hidden="true"></i>
-            <h2 class="counter" Id="numero">0</h2>
-            <p>no mercado de gestão empresarial</p>
-        </FluentCard>
+	<h2 style="color:black" class="hidden-left"> Principais Recursos </h2>
+	<div class="atras">
+		<FluentCard class="feature hidden-left numero">
+			<p> Desde </p>
+			<i class="ms-Icon ms-Icon--Money" aria-hidden="true"></i>
+			<h2 class="counter" Id="numero">0</h2>
+			<p>no mercado de gestão empresarial</p>
+		</FluentCard>
 
-        <FluentCard class="feature hidden-left " id="numero">
-            <p> Mais de </p>
-            <i class="ms-Icon ms-Icon--Chart" aria-hidden="true"></i>
-            <h2 id="empresas">0</h2>
-            <p>Empresas parceiras que migraram para o Linter</p>
-        </FluentCard>
+		<FluentCard class="feature hidden-left " id="numero">
+			<p> Mais de </p>
+			<i class="ms-Icon ms-Icon--Chart" aria-hidden="true"></i>
+			<h2 id="empresas">0</h2>
+			<p>Empresas parceiras que migraram para o Linter</p>
+		</FluentCard>
 
-        <FluentCard class="feature hidden-left numero">
-            <p> Uma média de </p>
-            <i class="ms-Icon ms-Icon--Shield" aria-hidden="true"></i>
-            <h2 id="crescimento">0</h2> %
-            <p>de crescimento após o adoção do Linter</p>
-        </FluentCard>
-    </div>
+		<FluentCard class="feature hidden-left numero">
+			<p> Uma média de </p>
+			<i class="ms-Icon ms-Icon--Shield" aria-hidden="true"></i>
+			<h2 id="crescimento">0</h2> %
+			<p>de crescimento após o adoção do Linter</p>
+		</FluentCard>
+	</div>
 </section>
 
 
@@ -389,45 +529,45 @@
 
 <br />
 <div>
-    <FluentCard>
-        <h1 class="hidden baixo"> Conheça a nossa empresa </h1>
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <img src="/imagens/ldn_grande.png" />
-            <p style="text-align: justify;">
-                Criada em 2009 pela iniciativa empreendedora dos seus 3 sócios trazendo uma grande experiência na área de desenvolvimento e suporte à sistemas informatizados de gestão empresarial.
-                Hoje a LDN Softwares atende a diversos mercados com seus diversos produtos, visando atingir a todos os ramos de negócios como Industrias, comércios, serviços e agronegócio.
-            </p>
-        </div>
-    </FluentCard>
+	<FluentCard>
+		<h1 class="hidden baixo"> Conheça a nossa empresa </h1>
+		<div style="display: flex; align-items: center; gap: 20px;">
+			<img src="/imagens/ldn_grande.png" />
+			<p style="text-align: justify;">
+				Criada em 2009 pela iniciativa empreendedora dos seus 3 sócios trazendo uma grande experiência na área de desenvolvimento e suporte à sistemas informatizados de gestão empresarial.
+				Hoje a LDN Softwares atende a diversos mercados com seus diversos produtos, visando atingir a todos os ramos de negócios como Industrias, comércios, serviços e agronegócio.
+			</p>
+		</div>
+	</FluentCard>
 </div>
 <br />
 <br />
 <br />
 
 @code {
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await runtime.InvokeVoidAsync("animarNumero", "numero", 2009, 2000);
-        await runtime.InvokeVoidAsync("animarNumero", "empresas", 50, 1950);
-        await runtime.InvokeVoidAsync("animarNumero", "crescimento", 83, 2000);
-        //await runtime.InvokeVoidAsync("MostraDivBaixo", "Linter");
-        await runtime.InvokeVoidAsync("MostraDivBaixoClasse", "baixo");
-        await runtime.InvokeVoidAsync("CreateSweeper", "swiper");
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await runtime.InvokeVoidAsync("animarNumero", "numero", 2009, 2000);
+		await runtime.InvokeVoidAsync("animarNumero", "empresas", 50, 1950);
+		await runtime.InvokeVoidAsync("animarNumero", "crescimento", 83, 2000);
+		//await runtime.InvokeVoidAsync("MostraDivBaixo", "Linter");
+		await runtime.InvokeVoidAsync("MostraDivBaixoClasse", "baixo");
+		await runtime.InvokeVoidAsync("CreateSweeper");
 
-    }
+	}
 
-    private async Task Navegar()
-    {
-        var user = await state.GetAuthenticationStateAsync();
-        if (user.User.Identity.IsAuthenticated)
-        {
-            navigation.NavigateTo("/caixa");
-        }
-        else
-        {
-            navigation.NavigateTo("/Account/Login");
-        }
-    }
+	private async Task Navegar()
+	{
+		var user = await state.GetAuthenticationStateAsync();
+		if (user.User.Identity.IsAuthenticated)
+		{
+			navigation.NavigateTo("/caixa");
+		}
+		else
+		{
+			navigation.NavigateTo("/Account/Login");
+		}
+	}
 }
 
 

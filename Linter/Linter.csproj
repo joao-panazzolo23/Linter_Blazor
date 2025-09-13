@@ -99,6 +99,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Linter.Modelos\Linter.Modelos.csproj" />
-		<ProjectReference Include="..\Linter.Repositorio\Linter.Dados.csproj" />
+		<ProjectReference Include="..\Linter.Repositorio\Linter.Infraestructure.csproj" />
 	</ItemGroup>
 </Project>

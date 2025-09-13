@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Linter.Modelos.Modelos
 {
-    public class CNT001_ContasGerenciais
+    public class Account
     {
         [Key]
         public int idContaGerencial { get; set; }

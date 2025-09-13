@@ -23,7 +23,7 @@ namespace Linter.Components.Account
 
             accountGroup.MapPost("/PerformExternalLogin", (
                 HttpContext context,
-                [FromServices] SignInManager<TAB001_Usuarios> signInManager,
+                [FromServices] SignInManager<Users> signInManager,
                 [FromForm] string provider,
                 [FromForm] string returnUrl) =>
             {
@@ -44,7 +44,7 @@ namespace Linter.Components.Account
 
             accountGroup.MapPost("/Logout", async (
                 ClaimsPrincipal user,
-                SignInManager<TAB001_Usuarios> signInManager,
+                SignInManager<Users> signInManager,
                 [FromForm] string returnUrl) =>
             {
                 await signInManager.SignOutAsync();
@@ -55,7 +55,7 @@ namespace Linter.Components.Account
 
             manageGroup.MapPost("/LinkExternalLogin", async (
                 HttpContext context,
-                [FromServices] SignInManager<TAB001_Usuarios> signInManager,
+                [FromServices] SignInManager<Users> signInManager,
                 [FromForm] string provider) =>
             {
                 // Clear the existing external cookie to ensure a clean login process
@@ -77,7 +77,7 @@ namespace Linter.Components.Account
 
             manageGroup.MapPost("/DownloadPersonalData", async (
                 HttpContext context,
-                [FromServices] UserManager<TAB001_Usuarios> userManager,
+                [FromServices] UserManager<Users> userManager,
                 [FromServices] AuthenticationStateProvider authenticationStateProvider) =>
             {
                 var user = await userManager.GetUserAsync(context.User);
@@ -91,7 +91,7 @@ namespace Linter.Components.Account
 
                 // Only include personal data for download
                 var personalData = new Dictionary<string, string>();
-                var personalDataProps = typeof(TAB001_Usuarios).GetProperties().Where(
+                var personalDataProps = typeof(Users).GetProperties().Where(
                     prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
                 foreach (var p in personalDataProps)
                 {

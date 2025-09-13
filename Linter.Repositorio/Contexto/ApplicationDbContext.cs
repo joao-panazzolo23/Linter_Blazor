@@ -11,7 +11,7 @@ using System.Xml;
 
 namespace Linter.Dados.Contexto
 {
-    public class ApplicationDbContext : IdentityDbContext<TAB001_Usuarios, IdentityRole<int>, int>
+    public class ApplicationDbContext : IdentityDbContext<Users, IdentityRole<int>, int>
     {
         #region Construtor
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -21,11 +21,11 @@ namespace Linter.Dados.Contexto
         #endregion
 
         #region Propriedades
-        public DbSet<TAB001_Usuarios> TAB001_Usuarios { get; set; }
+        public DbSet<Users> TAB001_Usuarios { get; set; }
         public DbSet<CAX001_Movimentacoes> CAX001_MovimentacoesCaixa { get; set; }
-        public DbSet<CAX002_MovimentaocesCanceladas> CAX002_MovimentaocesCanceladas { get; set; }
-        public DbSet<CNT001_ContasGerenciais> CNT001_ContasGerenciais { get; set; }
-        public DbSet<CNT002_ContasExcluidas> CNT002_ContasExcluidas { get; set; }
+        public DbSet<FinanceCancel> Cancelations { get; set; }
+        public DbSet<Account> CNT001_ContasGerenciais { get; set; }
+        public DbSet<DeletedAccount> CNT002_ContasExcluidas { get; set; }
         #endregion
 
         #region OnModelCreating
@@ -274,7 +274,7 @@ namespace Linter.Dados.Contexto
             #endregion
 
             #region CAX002_MovimentacoesCanceladas
-            builder.Entity<CAX002_MovimentaocesCanceladas>().HasNoKey();
+            builder.Entity<FinanceCancel>().HasNoKey();
             #endregion
 
 

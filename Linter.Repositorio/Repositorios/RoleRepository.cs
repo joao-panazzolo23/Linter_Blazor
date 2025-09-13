@@ -1,25 +1,18 @@
 ﻿using Linter.Dados.Contexto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Linter.Dados.Repositorios
 {
-    public class TAB002_CargosRepositorio
+    public class RoleRepository
     {
         #region Construtores
         private readonly ApplicationDbContext context;
-        public TAB002_CargosRepositorio()
+        public RoleRepository()
         {
-                
+
         }
-        public TAB002_CargosRepositorio(ApplicationDbContext _context)
+        public RoleRepository(ApplicationDbContext _context)
         {
             context = _context;
         }
@@ -27,12 +20,12 @@ namespace Linter.Dados.Repositorios
 
         #region Manutencao
 
-        public async Task GravarRoles(IdentityRole<int> permissao)
+        public async Task Save(IdentityRole<int> permissao)
         {
             await context.Roles.AddAsync(permissao);
-            await context.SaveChangesAsync();   
+            await context.SaveChangesAsync();
         }
-        public void AtualizarRoles(IdentityRole<int> permissao)
+        public void Update(IdentityRole<int> permissao)
         {
             context.Roles.Update(permissao);
             context.SaveChangesAsync();
@@ -47,7 +40,7 @@ namespace Linter.Dados.Repositorios
         }
         public async Task<IdentityRole<int>> RetornaUm(int id)
         {
-            return await context.Roles.Where(X=> X.Id == id).FirstOrDefaultAsync() ?? new IdentityRole<int>();
+            return await context.Roles.Where(X => X.Id == id).FirstOrDefaultAsync() ?? new IdentityRole<int>();
         }
 
         #endregion
