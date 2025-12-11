@@ -1,9 +1,13 @@
 ﻿@page "/caixa"
 @rendermode InteractiveServer
-@inject Dados.Repositorios.TransactionRepository repositorio
+@inject TransactionRepository repositorio
 @inject ToastService Toast
 @inject IDialogService dialogservice
 
+@using Linter.Infraestructure.Repositories
+@using Linter.Modelos.Entities
+@using Linter.Modelos.Enums
+@using Linter.Models.Enums
 @using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
 @inject AuthenticationStateProvider authenticate
@@ -47,7 +51,7 @@
                         *@
                     </PropertyColumn>
 
-                    <PropertyColumn Width="50" Property="@(p=> Linter.Utilidades.Uteis.PegaNomeDeExibicao((Enumeradores.TipoMovimentacao)p.Tipo))" Title="Tipo Movi." Align="Align.Start" />
+                    <PropertyColumn Width="50" Property="@(p=> Linter.Utilidades.Uteis.PegaNomeDeExibicao((Enumeradores.MovementNature)p.Tipo))" Title="Tipo Movi." Align="Align.Start" />
                     <PropertyColumn Property="@(p=> p.DataMovimentacao)" Format="dd/MM/yyyy" Sortable="true" Title="Data" Align="Align.Start" />
                     <PropertyColumn Property="@(p=> p.Valor.ToString("C2"))" Title="Valor" Sortable="false" /> @* sortable não funciona com conversoes, descobrir solucao*@
                     <PropertyColumn Property="@(p=> p.Descritivo)" Title="Descrição" Sortable="@usuario.User.IsInRole("ADMINISTRADOR")">
@@ -94,10 +98,10 @@
     [Parameter]
     public Enumeradores.TipoView tipoView { get; set; }
     [Parameter] public int idMovimentacao { get; set; } = 0;
-    public Enumeradores.TipoMovimentacao? tipomov { get; set; }
-    [SupplyParameterFromForm] public Modelos.Modelos.CAX001_Movimentacoes Caixa { get; set; } = new Modelos.Modelos.CAX001_Movimentacoes();
-    public IQueryable<CAX001_Movimentacoes> queryMov;
-    IQueryable<CAX001_Movimentacoes>? lstFiltrada => queryMov?.Where(x => x.Descritivo.ToUpper().Contains(nomeFiltro.ToUpper()));
+    public MovementNature? tipomov { get; set; }
+    [SupplyParameterFromForm] public FinanceMovement Caixa { get; set; } = new FinanceMovement();
+    public IQueryable<FinanceMovement> queryMov;
+    IQueryable<FinanceMovement>? lstFiltrada => queryMov?.Where(x => x.Descritivo.ToUpper().Contains(nomeFiltro.ToUpper()));
 
     PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
 
@@ -111,7 +115,7 @@
 
         foreach (var mov in queryMov)
         {
-            if (mov.Tipo == (int)Enumeradores.TipoMovimentacao.Entrada)
+            if (mov.Tipo == (int)Enumeradores.MovementNature.Entrada)
                 Saldo += mov.Valor;
             else
                 Saldo -= mov.Valor;

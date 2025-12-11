@@ -5,7 +5,6 @@ namespace Linter.Utilidades
 {
     public static class Uteis
     {
-        #region Funções de Enumeradores
         public static string PegaNomeDeExibicao(this Enum enumValue)
         {
             return enumValue.GetType()?
@@ -13,15 +12,8 @@ namespace Linter.Utilidades
                             .First()?
                             .GetCustomAttribute<DisplayAttribute>()?
                             .Name;
-        }
-        #endregion
-
-        #region CNPJ
-
-        #endregion
-
-        #region CPF 
-
+        } 
+        
         public static bool ValidarCPF(string cpf)
         {
 
@@ -55,7 +47,6 @@ namespace Linter.Utilidades
 
             return cpf[9] == digito1.ToString()[0] && cpf[10] == digito2.ToString()[0];
         }
-        #endregion
     }
 
 }

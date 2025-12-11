@@ -1,6 +1,7 @@
-﻿@inject CNT002_ContasExcluidasRepositorio rep
+﻿@inject DeletedAccountsRepository rep
 
 @page "/contasgerenciais/excluidas"
+@using Linter.Infraestructure.Repositories
 
 <h1 class="centralizado">Contas excluídas</h1>
 
@@ -16,11 +17,11 @@
                     AutoFit="false"
                     RowSize="DataGridRowSize.Medium">
         <ChildContent>
-            <PropertyColumn Property="@(p=> p.idContaGerencial)" Sortable="true" Title="ID Conta" />
-            <PropertyColumn Property="@(p=> p.Descricao)" Title="Descricao" Sortable="false" />
-            <PropertyColumn Property="@(p=> p.DataExclusao)" Title="Descricao" Sortable="false" />
-            <PropertyColumn Property="@(p=> p.MotivoCancelamento)" Title="Descricao" Sortable="false" />
-            <PropertyColumn Property="@(p=> p.UsuarioExclusao)" Title="Descricao" Sortable="false" />
+            @* <PropertyColumn Property="@(p=> p.Id)" Sortable="true" Title="ID Conta" /> *@
+            <PropertyColumn Property="@(p=> p.Reason)" Title="Razão" Sortable="false" />
+            <PropertyColumn Property="@(p=> p.CreatedAt)" Title="Data da exclusão" Sortable="false" />
+            <PropertyColumn Property="@(p=> p.Reason)" Title="Descricao" Sortable="false" />
+            <PropertyColumn Property="@(p=> p.UserId)" Title="Descricao" Sortable="false" />
             <TemplateColumn Title="Ações" Align="@Align.End" Width="200px" Context="template">
                 <FluentButton aria-label="Restaurar" IconEnd="@(new Icons.Light.Size32.Options())" />
                 <FluentButton aria-label="Consultar" IconEnd="@(new Icons.Light.Size32.ZoomIn())" />
@@ -42,6 +43,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        queryConta = rep.RetornaTodasExcluidas();
+        // queryConta = rep.RetornaTodasExcluidas();
     }
 }

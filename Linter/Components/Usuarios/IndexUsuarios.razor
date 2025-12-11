@@ -1,87 +1,89 @@
-﻿@page "/usuarios"
-@using Microsoft.AspNetCore.Authorization
-
-@inject UserManager<Users> manager
-@inject TAB001_UsuariosRepositorio repositorio
-@inject NavigationManager navigations
-@inject AuthenticationStateProvider state
-@rendermode InteractiveServer
-
-<style>
-    .hidden-button {
-        visibility: hidden; /* Ou display: none; */
-    }
-</style>
-
-<FluentMenuProvider />
-<AuthorizeView>
-    <Authorized>
-        <h1 class="centralizado">Usuários registrados</h1>
-        nao consegui inserir um usuário fora da view de register de jeito nenhum
-        <FluentCard Height="100" MinimalStyle="true">
-            <FluentAppBar Orientation="Orientation.Horizontal" Class="centralizado">
-                <FluentAppBarItem Text="Adicionar" IconRest="@(new Icons.Light.Size32.PeopleAdd())" OnClick="@(() => navigations.NavigateTo($"/usuarios/{(int)Enumeradores.TipoView.Criar}/{0}"))" />
-                <FluentAppBarItem Text="Bloqueados" IconRest="@(new Icons.Light.Size32.LockClosed())" OnClick="@(()=> navigations.NavigateTo("/admin/bloqueados"))" />
-            </FluentAppBar>
-
-
-            <FluentButton class="hidden-button"> </FluentButton>
-
-            <FluentDataGrid Items="queryUser"
-                            ResizableColumns=false
-                            HeaderCellAsButtonWithMenu="false"
-                            ShowHover="true"
-                            AutoFit="false"
-                            Pagination="pagination"
-                            RowSize="DataGridRowSize.Medium">
-
-                <EmptyContent>
-                    <FluentIcon Value="@(new Icons.Filled.Size16.CalendarEmpty())" Color="@Color.Accent" />&nbsp; Nenhum registro para ser exibido!
-                </EmptyContent>
-                <ChildContent>
-                    <PropertyColumn InitialSortDirection="SortDirection.Descending" Property="@(p=> p.Id)" Sortable="true" Title="ID" Align="Align.Center" />
-                    <PropertyColumn Property="@(p=> Linter.Utilidades.Uteis.PegaNomeDeExibicao((Enumeradores.TipoUsuario)p.TipoUsuario))" Title="Tipo Usuário." />
-                    <PropertyColumn Property="@(p=> p.UserName)" Sortable="true" Title="Nome de Usuário" />
-                    <PropertyColumn Property="@(p=> p.Email)" Title="Email" Sortable="true" />
-
-                    <AuthorizeView Roles="Administrator" Context="AutContext">
-                        <Authorized>
-                            <TemplateColumn Title="Ações" Align="@Align.End" Width="200px" Context="user">
-                                <FluentButton aria-label="Editar" IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => navigations.NavigateTo($"usuarios/{(int)Enumeradores.TipoView.Editar}/{user.Id}"))" />
-                                <FluentButton aria-label="Deletar" IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => navigations.NavigateTo($"usuarios/{(int)Enumeradores.TipoView.Apagar}/{user.Id}"))" />
-                            </TemplateColumn>
-                        </Authorized>
-                        <NotAuthorized />
-                    </AuthorizeView>
-                </ChildContent>
-
-                <LoadingContent>
-                    <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center">
-                        Carregando...<br />
-                        <FluentProgress Width="240px" />
-                    </FluentStack>
-                </LoadingContent>
-            </FluentDataGrid>
-        </FluentCard>
-
-        <LDN_Paginator Pagination="pagination" strTipo="usuários"> </LDN_Paginator>
-
-    </Authorized>
-    <NotAuthorized>
-        <NaoAutorizado />
-    </NotAuthorized>
-
-
-</AuthorizeView>
-@code {
-    IQueryable<Users> queryUser { get; set; }
-    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
-    private ClaimsPrincipal user { get; set; }
-    protected override async Task OnInitializedAsync()
-    {
-        //var authState = await AUTH.GetAuthenticationStateAsync();
-        //user = authState.User;
-        //queryUser = repositorio.RetornaTodos();
-    }
-
-}
+﻿@* @page "/usuarios" *@
+@* @using Linter.Infraestructure.Repositories *@
+@* @using Linter.Modelos.Enums *@
+@* @using Microsoft.AspNetCore.Authorization *@
+@* *@
+@* @inject UserManager<Users> manager *@
+@* @inject UsersRepository repositorio *@
+@* @inject NavigationManager navigations *@
+@* @inject AuthenticationStateProvider state *@
+@* @rendermode InteractiveServer *@
+@* *@
+@* <style> *@
+@*     .hidden-button { *@
+@*         visibility: hidden; /* Ou display: none; */ *@
+@*     } *@
+@* </style> *@
+@* *@
+@* <FluentMenuProvider /> *@
+@* <AuthorizeView> *@
+@*     <Authorized> *@
+@*         <h1 class="centralizado">Usuários registrados</h1> *@
+@*         nao consegui inserir um usuário fora da view de register de jeito nenhum *@
+@*         <FluentCard Height="100" MinimalStyle="true"> *@
+@*             <FluentAppBar Orientation="Orientation.Horizontal" Class="centralizado"> *@
+@*                 <FluentAppBarItem Text="Adicionar" IconRest="@(new Icons.Light.Size32.PeopleAdd())" OnClick="@(() => navigations.NavigateTo($"/usuarios/{(int)Enumeradores.TipoView.Criar}/{0}"))" /> *@
+@*                 <FluentAppBarItem Text="Bloqueados" IconRest="@(new Icons.Light.Size32.LockClosed())" OnClick="@(()=> navigations.NavigateTo("/admin/bloqueados"))" /> *@
+@*             </FluentAppBar> *@
+@* *@
+@* *@
+@*             <FluentButton class="hidden-button"> </FluentButton> *@
+@* *@
+@*             <FluentDataGrid Items="queryUser" *@
+@*                             ResizableColumns=false *@
+@*                             HeaderCellAsButtonWithMenu="false" *@
+@*                             ShowHover="true" *@
+@*                             AutoFit="false" *@
+@*                             Pagination="pagination" *@
+@*                             RowSize="DataGridRowSize.Medium"> *@
+@* *@
+@*                 <EmptyContent> *@
+@*                     <FluentIcon Value="@(new Icons.Filled.Size16.CalendarEmpty())" Color="@Color.Accent" />&nbsp; Nenhum registro para ser exibido! *@
+@*                 </EmptyContent> *@
+@*                 <ChildContent> *@
+@*                     <PropertyColumn InitialSortDirection="SortDirection.Descending" Property="@(p=> p.Id)" Sortable="true" Title="ID" Align="Align.Center" /> *@
+@*                     <PropertyColumn Property="@(p=> Linter.Utilidades.Uteis.PegaNomeDeExibicao((Enumeradores.TipoUsuario)p.TipoUsuario))" Title="Tipo Usuário." /> *@
+@*                     <PropertyColumn Property="@(p=> p.UserName)" Sortable="true" Title="Nome de Usuário" /> *@
+@*                     <PropertyColumn Property="@(p=> p.Email)" Title="Email" Sortable="true" /> *@
+@* *@
+@*                     <AuthorizeView Roles="Administrator" Context="AutContext"> *@
+@*                         <Authorized> *@
+@*                             <TemplateColumn Title="Ações" Align="@Align.End" Width="200px" Context="user"> *@
+@*                                 <FluentButton aria-label="Editar" IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => navigations.NavigateTo($"usuarios/{(int)Enumeradores.TipoView.Editar}/{user.Id}"))" /> *@
+@*                                 <FluentButton aria-label="Deletar" IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => navigations.NavigateTo($"usuarios/{(int)Enumeradores.TipoView.Apagar}/{user.Id}"))" /> *@
+@*                             </TemplateColumn> *@
+@*                         </Authorized> *@
+@*                         <NotAuthorized /> *@
+@*                     </AuthorizeView> *@
+@*                 </ChildContent> *@
+@* *@
+@*                 <LoadingContent> *@
+@*                     <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"> *@
+@*                         Carregando...<br /> *@
+@*                         <FluentProgress Width="240px" /> *@
+@*                     </FluentStack> *@
+@*                 </LoadingContent> *@
+@*             </FluentDataGrid> *@
+@*         </FluentCard> *@
+@* *@
+@*         <LDN_Paginator Pagination="pagination" strTipo="usuários"> </LDN_Paginator> *@
+@* *@
+@*     </Authorized> *@
+@*     <NotAuthorized> *@
+@*         <NaoAutorizado /> *@
+@*     </NotAuthorized> *@
+@* *@
+@* *@
+@* </AuthorizeView> *@
+@* @code { *@
+@*     IQueryable<Users> queryUser { get; set; } *@
+@*     PaginationState pagination = new PaginationState { ItemsPerPage = 10 }; *@
+@*     private ClaimsPrincipal user { get; set; } *@
+@*     protected override async Task OnInitializedAsync() *@
+@*     { *@
+@*         //var authState = await AUTH.GetAuthenticationStateAsync(); *@
+@*         //user = authState.User; *@
+@*         //queryUser = repositorio.RetornaTodos(); *@
+@*     } *@
+@* *@
+@* } *@

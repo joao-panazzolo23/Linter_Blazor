@@ -1,6 +1,6 @@
 using Linter.Components.Account.Pages;
 using Linter.Components.Account.Pages.Manage;
-using Linter.Modelos.Modelos;
+using Linter.Models.Modelos;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;

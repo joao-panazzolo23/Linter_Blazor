@@ -1,4 +1,4 @@
-using Linter.Modelos.Modelos;
+using Linter.Models.Modelos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 

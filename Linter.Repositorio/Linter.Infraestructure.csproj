@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Linter.Modelos\Linter.Modelos.csproj" />
+		<ProjectReference Include="..\Linter.Models\Linter.Models.csproj" />
 	</ItemGroup>
 
 </Project>

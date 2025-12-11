@@ -1,4 +1,6 @@
 ﻿@page "/caixa/cancelamentos"
+@using Linter.Infraestructure.Repositories
+@using Linter.Modelos.Enums
 @inject TransactionCancelationRepository rep
 @inject NavigationManager navigation
 @rendermode InteractiveServer
@@ -57,7 +59,7 @@
     </NotAuthorized>
 </AuthorizeView>
 @code {
-    public IQueryable<FinanceCancel> queryCanceladas;
+    public IQueryable<FinanceCancellations> queryCanceladas;
 
     public PaginationState pagination { get; set; } = new PaginationState { ItemsPerPage = 10 };
     protected override Task OnInitializedAsync()

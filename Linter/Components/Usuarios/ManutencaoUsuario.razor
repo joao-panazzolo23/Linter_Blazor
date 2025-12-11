@@ -1,249 +1,249 @@
-﻿@page "/usuarios/{tipoView:int}/{id:int}"
-@inject NavigationManager navigation
-@using Microsoft.AspNetCore.Identity
-@using System.ComponentModel.DataAnnotations
-@using Microsoft.AspNetCore.WebUtilities
-@using System.Text
-@using System.Text.Encodings.Web
-@inject TAB001_UsuariosRepositorio rep
-@rendermode InteractiveServer
-
-@inject UserManager<Users> UserManager
-@inject IUserStore<Users> UserStore
-@inject SignInManager<Users> SignInManager
-@inject IEmailSender<Users> EmailSender
-@inject NavigationManager NavigationManager
-@inject IdentityRedirectManager RedirectManager
-
-<h3>@btnString</h3>
-
-<AuthorizeView Context="authorize">
-
-    <FluentMenuProvider />
-
-    <FluentEditForm Model="Input" Context="edit">
-        <DataAnnotationsValidator />
-        <FluentCard Height="400" Width="600" style="padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px;" MinimalStyle="true">
-            <FluentTabs>
-                <FluentTab Label="Usuário">
-                    <FluentGrid>
-                        <FluentGridItem>
-                            <FluentTextField Placeholder="Nome do Usuário..." Label="Nome do Usuário" @bind-Value="Input.NomeDeUsuario" style="width: 100%;" />
-                            <FluentValidationMessage For="@(() => Input.NomeDeUsuario)" />
-                        </FluentGridItem>
-                        <FluentGridItem>
-                            <FluentTextField Placeholder="Email..." Label="Email" @bind-Value="Input.Email" style="width: 100%;" />
-                            <FluentValidationMessage For="@(() => Input.Email)" />
-                        </FluentGridItem>
-
-                        <FluentGridItem>
-                            <FluentTextField Placeholder="Senha..." Label="Senha" @bind-Value="Input.Senha" style="width: 100%;" />
-                            <FluentValidationMessage For="@(() => Input.Senha)" />
-                        </FluentGridItem>
-
-                        <FluentGridItem>
-                            <FluentTextField Placeholder="Telefone..." Label="Confirme a senha" @bind-Value="Input.ConfirmeSenha" style="width: 100%;" />
-                            <FluentValidationMessage For="@(() => Input.ConfirmeSenha)" />
-                        </FluentGridItem>
-
-                    </FluentGrid>
-                </FluentTab>
-
-                <!-- aba de endereço -->
-                @*  <FluentTab Label="Endereço">
-                <FluentGrid>
-                <FluentGridItem>
-                <FluentTextField Placeholder="Rua..." Label="Rua" @bind-Value="Usuario.Rua" style="width: 100%;" />
-                </FluentGridItem>
-                <FluentGridItem> *@
-                @*  tenho q descobrir como passar esses enumeradores aqui tbm
-                <FluentCombobox TOption="Enumeradores.Cidades" Items="Cidades" @bind-Value="Usuario.Cidade" Label="Selecione a Cidade" style="width: 100%;">
-                </FluentCombobox>
-                </FluentGridItem>
-                </FluentGrid>
-                </FluentTab>
-
-                @*  <FluentTab Label="Permissões">
-                <FluentDataGrid Items="lstClaims"
-                ResizableColumns=false
-                HeaderCellAsButtonWithMenu="false"
-                ShowHover="true"
-                AutoFit="false"
-                Pagination="pagination"
-                RowSize="DataGridRowSize.Medium">
-
-                <PropertyColumn Property="@(p=> p.Subject)" Title="Valor"> </PropertyColumn>
-                <PropertyColumn Property="@(p=> p.Issuer)" Title="Issuer"> </PropertyColumn>
-                <PropertyColumn Property="@(p=> p.Value)" Title="Valor"> </PropertyColumn>
-                <PropertyColumn Property="@(p=> p.Properties)" Title="Propriedades"> </PropertyColumn>
-                <PropertyColumn Property="@(p=> p.OriginalIssuer)" Title="IssuerOriginal"> </PropertyColumn>
-                </FluentDataGrid>
-                <FluentTextField>
-
-                </FluentTextField>
-                </FluentTab> *@
-            </FluentTabs>
-        </FluentCard>
-        <LDN_Paginator strTipo="Permissões" Pagination="pagination"></LDN_Paginator>
-
-        <br />
-        <FluentButton IconStart="new Icons.Regular.Size20.Save()" OnClick="@(() => AcionarBotao(edit))"> Adicionar Usuário </FluentButton>
-        <FluentButton Type="ButtonType.Button" Disabled="false" OnClick="@Retornar" IconStart="new Icons.Regular.Size20.ArrowCircleLeft()"> Retornar </FluentButton>
-    </FluentEditForm>
-</AuthorizeView>
-<br />
-
-@code {
-    public Users usuario { get; set; }
-    [Parameter]
-    public Enumeradores.TipoView tipoView { get; set; }
-    public Enumeradores.Cidades Cidades { get; set; }
-    public IQueryable<Claim> lstClaims { get; set; }
-    public List<string> RolesParticipantes { get; set; }
-    [Parameter]
-    public int id { get; set; } = 0;
-    public string btnString { get; set; } = "";
-    [SupplyParameterFromForm]
-    public Icon IconeButton { get; set; } = new Icons.Regular.Size16.Save();
-    bool BotoesDisabled = false;
-    public bool Disabled { get; set; } = false;
-    public string txtBotao { get; set; } = "Adicionar movimentação";
-    public PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
-    public Enumeradores.TipoMovimentacao? tipomov { get; set; }
-
-    [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
-
-    [SupplyParameterFromQuery]
-    private string? ReturnUrl { get; set; }
-
-    public List<Claim> claims = new List<Claim>();
-
-    public Users Usuario { get; set; } = new Users();
-
-    protected async override Task OnInitializedAsync()
-    {
-        CarregaDados();
-    }
-
-    private void Retornar()
-    {
-        navigation.NavigateTo("/usuarios/");
-    }
-
-    public void CarregaDados()
-    {
-        if (tipoView != (int)Enumeradores.TipoView.Criar)
-        {
-            Usuario = rep.RetornaUm(id);
-        }
-        switch ((int)tipoView)
-        {
-            case (int)Enumeradores.TipoView.Criar:
-                IconeButton = new Icons.Regular.Size20.Save();
-                txtBotao = "Adicionar movimentação";
-                BotoesDisabled = false;
-                Disabled = false;
-                break;
-            case (int)Enumeradores.TipoView.Editar:
-                Disabled = false;
-                BotoesDisabled = false;
-                IconeButton = new Icons.Regular.Size20.Edit();
-                txtBotao = "Editar movimentação";
-                break;
-            case (int)Enumeradores.TipoView.Apagar:
-                IconeButton = new Icons.Regular.Size20.Delete();
-                Disabled = true;
-                BotoesDisabled = false;
-                txtBotao = "Excluir movimentação";
-                break;
-        }
-    }
-
-    public async Task AcionarBotao(EditContext editContext)
-    {
-        var erros = editContext.GetValidationMessages();
-
-        if (editContext.Validate())
-        {
-            switch (tipoView)
-            {
-                case Enumeradores.TipoView.Criar:
-                    await RegisterUser(editContext);
-                    break;
-
-                case Enumeradores.TipoView.Editar:
-                    await rep.AtualizarUsuario(Usuario, RolesParticipantes);
-                    break;
-
-                case Enumeradores.TipoView.Apagar:
-                    await rep.RemoverUsuario(Usuario, RolesParticipantes, claims);
-                    break;
-            }
-        }
-    }
-
-    public async Task RegisterUser(EditContext editContext)
-    {
-        //AQ TEM UMA FUNCAO DE CREATE USER QUE NÃO CRIA OS USUARIOS
-        var user = CreateUser();
-
-        //await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-        //
-        //var userId = await UserManager.GetUserIdAsync(user);
-        //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-        //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-        //var callbackUrl = NavigationManager.GetUriWithQueryParameters(
-        //    NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
-        //    new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code, ["returnUrl"] = ReturnUrl });
-
-        //await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
-
-        //if (UserManager.Options.SignIn.RequireConfirmedAccount)
-        //{
-        //    RedirectManager.RedirectTo(
-        //        "Account/RegisterConfirmation",
-        //        new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
-        //}
-
-        //await SignInManager.SignInAsync(user, isPersistent: false);
-
-        RedirectManager.RedirectTo("/indexusuarios");
-    }
-
-    private IdentityUser<int> CreateUser()
-    {
-        try
-        {
-            return Activator.CreateInstance<IdentityUser<int>>();
-        }
-        catch
-        {
-            throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor.");
-        }
-    }
-
-    private sealed class InputModel
-    {
-        [Required(ErrorMessage = "Insira um email válido!")]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; } = "";
-
-        [Required(ErrorMessage = "Insira uma senha válida!")]
-        [StringLength(100, ErrorMessage = "A senha precisa ter no mínimo {2} carecteres e no máximo {1} caracteres.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Senha { get; set; } = "";
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Senha", ErrorMessage = "As senhas não coincidem.")]
-        public string ConfirmeSenha { get; set; } = "";
-        [DataType(DataType.Password)]
-        [Display(Name = "Nome de Usuário")]
-        [Required(ErrorMessage = "Digite um nome de usuário válido.")]
-        public string NomeDeUsuario { get; set; } = "";
-    }
-}
+﻿@* @page "/usuarios/{tipoView:int}/{id:int}" *@
+@* @inject NavigationManager navigation *@
+@* @using Microsoft.AspNetCore.Identity *@
+@* @using System.ComponentModel.DataAnnotations *@
+@* @using Microsoft.AspNetCore.WebUtilities *@
+@* @using System.Text *@
+@* @using System.Text.Encodings.Web *@
+@* @using Linter.Infraestructure.Repositories *@
+@* @using Linter.Modelos.Enums *@
+@* @inject UsersRepository rep *@
+@* @rendermode InteractiveServer *@
+@* *@
+@* @inject UserManager<Users> UserManager *@
+@* @inject IUserStore<Users> UserStore *@
+@* @inject SignInManager<Users> SignInManager *@
+@* @inject IEmailSender<Users> EmailSender *@
+@* @inject NavigationManager NavigationManager *@
+@* @inject IdentityRedirectManager RedirectManager *@
+@* *@
+@* <h3>@btnString</h3> *@
+@* *@
+@* <AuthorizeView Context="authorize"> *@
+@* *@
+@*     <FluentMenuProvider /> *@
+@* *@
+@*     <FluentEditForm Model="Input" Context="edit"> *@
+@*         <DataAnnotationsValidator /> *@
+@*         <FluentCard Height="400" Width="600" style="padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px;" MinimalStyle="true"> *@
+@*             <FluentTabs> *@
+@*                 <FluentTab Label="Usuário"> *@
+@*                     <FluentGrid> *@
+@*                         <FluentGridItem> *@
+@*                             <FluentTextField Placeholder="Nome do Usuário..." Label="Nome do Usuário" @bind-Value="Input.NomeDeUsuario" style="width: 100%;" /> *@
+@*                             <FluentValidationMessage For="@(() => Input.NomeDeUsuario)" /> *@
+@*                         </FluentGridItem> *@
+@*                         <FluentGridItem> *@
+@*                             <FluentTextField Placeholder="Email..." Label="Email" @bind-Value="Input.Email" style="width: 100%;" /> *@
+@*                             <FluentValidationMessage For="@(() => Input.Email)" /> *@
+@*                         </FluentGridItem> *@
+@* *@
+@*                         <FluentGridItem> *@
+@*                             <FluentTextField Placeholder="Senha..." Label="Senha" @bind-Value="Input.Senha" style="width: 100%;" /> *@
+@*                             <FluentValidationMessage For="@(() => Input.Senha)" /> *@
+@*                         </FluentGridItem> *@
+@* *@
+@*                         <FluentGridItem> *@
+@*                             <FluentTextField Placeholder="Telefone..." Label="Confirme a senha" @bind-Value="Input.ConfirmeSenha" style="width: 100%;" /> *@
+@*                             <FluentValidationMessage For="@(() => Input.ConfirmeSenha)" /> *@
+@*                         </FluentGridItem> *@
+@* *@
+@*                     </FluentGrid> *@
+@*                 </FluentTab> *@
+@* *@
+@*                 <!-- aba de endereço --> *@
+@*                 @*  <FluentTab Label="Endereço"> *@
+@*                 <FluentGrid> *@
+@*                 <FluentGridItem> *@
+@*                 <FluentTextField Placeholder="Rua..." Label="Rua" @bind-Value="Usuario.Rua" style="width: 100%;" /> *@
+@*                 </FluentGridItem> *@
+@*                 <FluentGridItem> *@ *@
+@*                 @*  tenho q descobrir como passar esses enumeradores aqui tbm *@
+@*                 <FluentCombobox TOption="Enumeradores.Cidades" Items="Cidades" @bind-Value="Usuario.Cidade" Label="Selecione a Cidade" style="width: 100%;"> *@
+@*                 </FluentCombobox> *@
+@*                 </FluentGridItem> *@
+@*                 </FluentGrid> *@
+@*                 </FluentTab> *@
+@* *@
+@*                 @*  <FluentTab Label="Permissões"> *@
+@*                 <FluentDataGrid Items="lstClaims" *@
+@*                 ResizableColumns=false *@
+@*                 HeaderCellAsButtonWithMenu="false" *@
+@*                 ShowHover="true" *@
+@*                 AutoFit="false" *@
+@*                 Pagination="pagination" *@
+@*                 RowSize="DataGridRowSize.Medium"> *@
+@* *@
+@*                 <PropertyColumn Property="@(p=> p.Subject)" Title="Valor"> </PropertyColumn> *@
+@*                 <PropertyColumn Property="@(p=> p.Issuer)" Title="Issuer"> </PropertyColumn> *@
+@*                 <PropertyColumn Property="@(p=> p.Value)" Title="Valor"> </PropertyColumn> *@
+@*                 <PropertyColumn Property="@(p=> p.Properties)" Title="Propriedades"> </PropertyColumn> *@
+@*                 <PropertyColumn Property="@(p=> p.OriginalIssuer)" Title="IssuerOriginal"> </PropertyColumn> *@
+@*                 </FluentDataGrid> *@
+@*                 <FluentTextField> *@
+@* *@
+@*                 </FluentTextField> *@
+@*                 </FluentTab> *@ *@
+@*             </FluentTabs> *@
+@*         </FluentCard> *@
+@*         <LDN_Paginator strTipo="Permissões" Pagination="pagination"></LDN_Paginator> *@
+@* *@
+@*         <br /> *@
+@*         <FluentButton IconStart="new Icons.Regular.Size20.Save()" OnClick="@(() => AcionarBotao(edit))"> Adicionar Usuário </FluentButton> *@
+@*         <FluentButton Type="ButtonType.Button" Disabled="false" OnClick="@Retornar" IconStart="new Icons.Regular.Size20.ArrowCircleLeft()"> Retornar </FluentButton> *@
+@*     </FluentEditForm> *@
+@* </AuthorizeView> *@
+@* <br /> *@
+@* *@
+@* @code { *@
+@*     public Users usuario { get; set; } *@
+@*     [Parameter] *@
+@*     public Enumeradores.TipoView tipoView { get; set; } *@
+@*     public IQueryable<Claim> lstClaims { get; set; } *@
+@*     public List<string> RolesParticipantes { get; set; } *@
+@*     [Parameter] *@
+@*     public int id { get; set; } = 0; *@
+@*     public string btnString { get; set; } = ""; *@
+@*     [SupplyParameterFromForm] *@
+@*     public Icon IconeButton { get; set; } = new Icons.Regular.Size16.Save(); *@
+@*     bool BotoesDisabled = false; *@
+@*     public bool Disabled { get; set; } = false; *@
+@*     public string txtBotao { get; set; } = "Adicionar movimentação"; *@
+@*     public PaginationState pagination = new PaginationState { ItemsPerPage = 10 }; *@
+@* *@
+@*     [SupplyParameterFromForm] *@
+@*     private InputModel Input { get; set; } = new(); *@
+@* *@
+@*     [SupplyParameterFromQuery] *@
+@*     private string? ReturnUrl { get; set; } *@
+@* *@
+@*     public List<Claim> claims = new List<Claim>(); *@
+@* *@
+@*     public Users Usuario { get; set; } = new Users(); *@
+@* *@
+@*     protected async override Task OnInitializedAsync() *@
+@*     { *@
+@*         CarregaDados(); *@
+@*     } *@
+@* *@
+@*     private void Retornar() *@
+@*     { *@
+@*         navigation.NavigateTo("/usuarios/"); *@
+@*     } *@
+@* *@
+@*     public void CarregaDados() *@
+@*     { *@
+@*         if (tipoView != (int)Enumeradores.TipoView.Criar) *@
+@*         { *@
+@*             Usuario = rep.RetornaUm(id); *@
+@*         } *@
+@*         switch ((int)tipoView) *@
+@*         { *@
+@*             case (int)Enumeradores.TipoView.Criar: *@
+@*                 IconeButton = new Icons.Regular.Size20.Save(); *@
+@*                 txtBotao = "Adicionar movimentação"; *@
+@*                 BotoesDisabled = false; *@
+@*                 Disabled = false; *@
+@*                 break; *@
+@*             case (int)Enumeradores.TipoView.Editar: *@
+@*                 Disabled = false; *@
+@*                 BotoesDisabled = false; *@
+@*                 IconeButton = new Icons.Regular.Size20.Edit(); *@
+@*                 txtBotao = "Editar movimentação"; *@
+@*                 break; *@
+@*             case (int)Enumeradores.TipoView.Apagar: *@
+@*                 IconeButton = new Icons.Regular.Size20.Delete(); *@
+@*                 Disabled = true; *@
+@*                 BotoesDisabled = false; *@
+@*                 txtBotao = "Excluir movimentação"; *@
+@*                 break; *@
+@*         } *@
+@*     } *@
+@* *@
+@*     public async Task AcionarBotao(EditContext editContext) *@
+@*     { *@
+@*         var erros = editContext.GetValidationMessages(); *@
+@* *@
+@*         if (editContext.Validate()) *@
+@*         { *@
+@*             switch (tipoView) *@
+@*             { *@
+@*                 case Enumeradores.TipoView.Criar: *@
+@*                     await RegisterUser(editContext); *@
+@*                     break; *@
+@* *@
+@*                 case Enumeradores.TipoView.Editar: *@
+@*                     await rep.AtualizarUsuario(Usuario, RolesParticipantes); *@
+@*                     break; *@
+@* *@
+@*                 case Enumeradores.TipoView.Apagar: *@
+@*                     await rep.RemoverUsuario(Usuario, RolesParticipantes, claims); *@
+@*                     break; *@
+@*             } *@
+@*         } *@
+@*     } *@
+@* *@
+@*     public async Task RegisterUser(EditContext editContext) *@
+@*     { *@
+@*         //AQ TEM UMA FUNCAO DE CREATE USER QUE NÃO CRIA OS USUARIOS *@
+@*         var user = CreateUser(); *@
+@* *@
+@*         //await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None); *@
+@*         // *@
+@*         //var userId = await UserManager.GetUserIdAsync(user); *@
+@*         //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user); *@
+@*         //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code)); *@
+@*         //var callbackUrl = NavigationManager.GetUriWithQueryParameters( *@
+@*         //    NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri, *@
+@*         //    new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code, ["returnUrl"] = ReturnUrl }); *@
+@* *@
+@*         //await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl)); *@
+@* *@
+@*         //if (UserManager.Options.SignIn.RequireConfirmedAccount) *@
+@*         //{ *@
+@*         //    RedirectManager.RedirectTo( *@
+@*         //        "Account/RegisterConfirmation", *@
+@*         //        new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl }); *@
+@*         //} *@
+@* *@
+@*         //await SignInManager.SignInAsync(user, isPersistent: false); *@
+@* *@
+@*         RedirectManager.RedirectTo("/indexusuarios"); *@
+@*     } *@
+@* *@
+@*     private IdentityUser<int> CreateUser() *@
+@*     { *@
+@*         try *@
+@*         { *@
+@*             return Activator.CreateInstance<IdentityUser<int>>(); *@
+@*         } *@
+@*         catch *@
+@*         { *@
+@*             throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " + *@
+@*                 $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor."); *@
+@*         } *@
+@*     } *@
+@* *@
+@*     private sealed class InputModel *@
+@*     { *@
+@*         [Required(ErrorMessage = "Insira um email válido!")] *@
+@*         [EmailAddress] *@
+@*         [Display(Name = "Email")] *@
+@*         public string Email { get; set; } = ""; *@
+@* *@
+@*         [Required(ErrorMessage = "Insira uma senha válida!")] *@
+@*         [StringLength(100, ErrorMessage = "A senha precisa ter no mínimo {2} carecteres e no máximo {1} caracteres.", MinimumLength = 6)] *@
+@*         [DataType(DataType.Password)] *@
+@*         [Display(Name = "Password")] *@
+@*         public string Senha { get; set; } = ""; *@
+@* *@
+@*         [DataType(DataType.Password)] *@
+@*         [Display(Name = "Confirm password")] *@
+@*         [Compare("Senha", ErrorMessage = "As senhas não coincidem.")] *@
+@*         public string ConfirmeSenha { get; set; } = ""; *@
+@*         [DataType(DataType.Password)] *@
+@*         [Display(Name = "Nome de Usuário")] *@
+@*         [Required(ErrorMessage = "Digite um nome de usuário válido.")] *@
+@*         public string NomeDeUsuario { get; set; } = ""; *@
+@*     } *@
+@* } *@

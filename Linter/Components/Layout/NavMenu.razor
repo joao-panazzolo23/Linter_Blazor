@@ -1,7 +1,8 @@
 ﻿@rendermode InteractiveServer
+@using Linter.Infraestructure.Repositories
 @implements IDisposable
 @inject NavigationManager NavigationManager
-@inject TAB001_UsuariosRepositorio rep
+@inject UsersRepository rep
 
 <div class="navmenu">
     <input type="checkbox" title="Menu expand/collapse toggle" id="navmenu-toggle" class="navmenu-icon" />

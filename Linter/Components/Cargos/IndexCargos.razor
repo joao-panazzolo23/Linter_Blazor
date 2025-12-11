@@ -1,4 +1,6 @@
 ﻿@page "/admin/cargos"
+@using Linter.Infraestructure.Repositories
+@using Linter.Modelos.Enums
 
 @rendermode InteractiveServer
 @inject RoleRepository rep
@@ -13,7 +15,7 @@
 
         <FluentCard Height="100" MinimalStyle="true" AreaRestricted="true">
             <FluentAppBar Orientation="Orientation.Horizontal" Class="centralizado">
-                <FluentAppBarItem Text="Adicionar" IconRest="@(new Icons.Regular.Size24.AddCircle())" OnClick="@(()=> navigation.NavigateTo($"/cargos/{(int)Enumeradores.TipoView.Criar}/{0}"))" />
+                @* <FluentAppBarItem Text="Adicionar" IconRest="@(new Icons.Regular.Size24.AddCircle())" OnClick="@(()=> navigation.NavigateTo($"/cargos/{(int)Enumeradores.TipoView.Criar}/{0}"))" /> *@
                 <FluentAppBarItem Text="Cancelamentos" IconRest="@(new Icons.Light.Size32.Delete())" OnClick="@(()=> navigation.NavigateTo("/caixa/cancelamentos"))" />
             </FluentAppBar>
             <FluentDataGrid Items="Roles"
@@ -29,8 +31,8 @@
                     <PropertyColumn Width="300px" Property="@(p=> p.Name)" Sortable="true" Title="Data" />
                     <PropertyColumn Width="400px" Property="@(p=> p.NormalizedName)" Title="Valor" Sortable="false" /> @* //sortable não funciona com conversoes, descobrir solucao *@
                     <TemplateColumn Title="Ações" Align="@Align.End" Width="200px" Context="mov">
-                        <FluentButton aria-label="Editar" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() =>  navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Editar}/{mov.Id}"))" />
-                        <FluentButton aria-label="Deletar" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Apagar}/{mov.Id}"))" />
+                        @* <FluentButton aria-label="Editar" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() =>  navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Editar}/{mov.Id}"))" /> *@
+                        @* <FluentButton aria-label="Deletar" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Apagar}/{mov.Id}"))" /> *@
                     </TemplateColumn>
                 </ChildContent>
 

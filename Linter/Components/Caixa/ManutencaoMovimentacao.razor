@@ -1,5 +1,8 @@
 ﻿@page "/caixa/{acao:int}/{id:int}"
 @using Linter.Components.ComponentesLDN
+@using Linter.Infraestructure.Repositories
+@using Linter.Modelos.Entities
+@using Linter.Modelos.Enums
 @rendermode InteractiveServer
 @inject TransactionRepository repositorio
 @inject TransactionCancelationRepository repCancelados
@@ -45,10 +48,10 @@
     bool BotoesDisabled = false;
     public bool Disabled { get; set; } = false;
     public string txtBotao { get; set; } = "Adicionar movimentação";
-    public Enumeradores.TipoMovimentacao? tipomov { get; set; }
+    public Enumeradores.MovementNature? tipomov { get; set; }
     //quando não existe um modelo sendo passado pra essa tela nem carregado no initialized, precisa inicializar ele manualmente
     [SupplyParameterFromForm]
-    public Modelos.Modelos.CAX001_Movimentacoes objMovi { get; set; } = new CAX001_Movimentacoes();
+    public FinanceMovement objMovi { get; set; } = new FinanceMovement();
 
     [Parameter] public int acao { get; set; }
 

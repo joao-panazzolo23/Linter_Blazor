@@ -1,118 +1,120 @@
-﻿@inject NavigationManager navigation
-@inject TAB001_UsuariosRepositorio rep
-@page "/admin/bloqueados"
-@rendermode InteractiveServer
-
-<h1 class="centralizado">Usuários Bloqueados</h1>
-
-<FluentCard Height="100" MinimalStyle="true">
-    <FluentDataGrid Items="UsuariosBloqueados"
-                    ResizableColumns=false
-                    HeaderCellAsButtonWithMenu="false"
-                    ShowHover="true"
-                    AutoFit="false"
-                    RowSize="DataGridRowSize.Medium"
-                    Pagination="@pagination">
-        <EmptyContent>
-            <FluentIcon Value="@(new Icons.Filled.Size16.CalendarEmpty())" Color="@Color.Accent" />&nbsp; Nenhum registro para ser exibido!
-        </EmptyContent>
-
-        <ChildContent>
-
-            <PropertyColumn Property="@(p=> p.Id)" Title="Descricao" Sortable="true" />
-            <PropertyColumn Property="@(p=> p.UserName)" Title="Descricao" Sortable="true">
-                <ColumnOptions>
-                    <div class="search-box">
-                        <FluentSearch type="search" Autofocus=true Placeholder="Descrição..." @bind-Value=nomeFiltro @oninput="Filtrar" @bind-Value:after="Limpar" />
-                    </div>
-                </ColumnOptions>
-
-            </PropertyColumn>
-            <PropertyColumn Property="@(p=> p.AccessFailedCount)" Title="Falhas Acesso" Sortable="false" />
-            <PropertyColumn Property="@(p=> p.Email)" Title="Email" Sortable="false" />
-            <PropertyColumn Property="@(p=> p.PhoneNumber)" Title="Telefone" Sortable="false" />
-            <TemplateColumn Title="Ações" Align="@Align.End" Width="200px" Context="conta">
-
-                <AuthorizeButton Action="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Consultar}/{conta.Id}"))" Icone="@(new Icons.Regular.Size16.Edit())" Titulo="Consultar"></AuthorizeButton>
-                <AuthorizeButton Action="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Criar}/{conta.Id}"))" Icone="@(new Icons.Regular.Size16.Delete())" Titulo="Restaurar"></AuthorizeButton>
-
-                @*                 <FluentButton aria-label="Restaurar" IconEnd="@(new Icons.Light.Size32.Options())" />
-                <FluentButton aria-label="Consultar" IconEnd="@(new Icons.Light.Size32.ZoomIn())" OnClick="@(()=> navigation.NavigateTo($"/contasgerenciais/{(int)Enumeradores.TipoView.Consultar}/{id:int}"))" /> *@
-            </TemplateColumn>
-        </ChildContent>
-
-        <LoadingContent>
-            <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center">
-                Carregando...<br />
-                <FluentProgress Width="240px" />
-            </FluentStack>
-        </LoadingContent>
-    </FluentDataGrid>
-</FluentCard>
-
-<LDN_Paginator Pagination="pagination" strTipo="usuários"> </LDN_Paginator>
-@*
-<FluentButton OnClick="@(()=> navigation.NavigateTo("/usuarios"))" IconStart="@(new Icons.Regular.Size16.ArrowStepBack())"> Voltar </FluentButton> *@
-
-@code {
-    public IQueryable<Users> UsuariosBloqueados { get; set; }
-    public int id { get; set; }
-    public PaginationState pagination { get; set; } = new PaginationState { ItemsPerPage = 10 };
-    string nomeFiltro = string.Empty;
-    protected override Task OnInitializedAsync()
-    {
-        //retorna todos os usuários que não estejam bloqueados
-        UsuariosBloqueados = rep.RetornaTodos().Where(x => x.LockoutEnabled == false).AsQueryable();
-
-        return base.OnInitializedAsync();
-    }
-    public async void RestaurarUsuario(int id)
-    {
-        var usuario = rep.RetornaUm(id);
-
-        usuario.AccessFailedCount = 0;
-        usuario.LockoutEnabled = true;
-        await rep.AtualizarUsuario(usuario);
-    }
-
-    private void Filtrar(ChangeEventArgs args)
-    {
-        if (args.Value is string value)
-        {
-            nomeFiltro = value;
-        }
-
-    }
-
-    private void Limpar()
-    {
-        if (string.IsNullOrWhiteSpace(nomeFiltro))
-        {
-            nomeFiltro = string.Empty;
-        }
-    }
-
-
-    //nao sei pra q serve, tava na documentacao do fluent
-    public class StringLengthComparer : IComparer<string>
-    {
-        public static readonly StringLengthComparer Instance = new StringLengthComparer();
-
-        public int Compare(string? x, string? y)
-        {
-            if (x is null)
-            {
-                return y is null ? 0 : -1;
-            }
-
-            if (y is null)
-            {
-                return 1;
-            }
-
-            return x.Length.CompareTo(y.Length);
-        }
-    }
-
-
-}
+﻿@* @inject NavigationManager navigation *@
+@* @inject UsersRepository rep *@
+@* @page "/admin/bloqueados" *@
+@* @using Linter.Infraestructure.Repositories *@
+@* @using Linter.Modelos.Enums *@
+@* @rendermode InteractiveServer *@
+@* *@
+@* <h1 class="centralizado">Usuários Bloqueados</h1> *@
+@* *@
+@* <FluentCard Height="100" MinimalStyle="true"> *@
+@*     <FluentDataGrid Items="UsuariosBloqueados" *@
+@*                     ResizableColumns=false *@
+@*                     HeaderCellAsButtonWithMenu="false" *@
+@*                     ShowHover="true" *@
+@*                     AutoFit="false" *@
+@*                     RowSize="DataGridRowSize.Medium" *@
+@*                     Pagination="@pagination"> *@
+@*         <EmptyContent> *@
+@*             <FluentIcon Value="@(new Icons.Filled.Size16.CalendarEmpty())" Color="@Color.Accent" />&nbsp; Nenhum registro para ser exibido! *@
+@*         </EmptyContent> *@
+@* *@
+@*         <ChildContent> *@
+@* *@
+@*             <PropertyColumn Property="@(p=> p.Id)" Title="Descricao" Sortable="true" /> *@
+@*             <PropertyColumn Property="@(p=> p.UserName)" Title="Descricao" Sortable="true"> *@
+@*                 <ColumnOptions> *@
+@*                     <div class="search-box"> *@
+@*                         <FluentSearch type="search" Autofocus=true Placeholder="Descrição..." @bind-Value=nomeFiltro @oninput="Filtrar" @bind-Value:after="Limpar" /> *@
+@*                     </div> *@
+@*                 </ColumnOptions> *@
+@* *@
+@*             </PropertyColumn> *@
+@*             <PropertyColumn Property="@(p=> p.AccessFailedCount)" Title="Falhas Acesso" Sortable="false" /> *@
+@*             <PropertyColumn Property="@(p=> p.Email)" Title="Email" Sortable="false" /> *@
+@*             <PropertyColumn Property="@(p=> p.PhoneNumber)" Title="Telefone" Sortable="false" /> *@
+@*             <TemplateColumn Title="Ações" Align="@Align.End" Width="200px" Context="conta"> *@
+@* *@
+@*                 <AuthorizeButton Action="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Consultar}/{conta.Id}"))" Icone="@(new Icons.Regular.Size16.Edit())" Titulo="Consultar"></AuthorizeButton> *@
+@*                 <AuthorizeButton Action="@(() => navigation.NavigateTo($"/caixa/{(int)Enumeradores.TipoView.Criar}/{conta.Id}"))" Icone="@(new Icons.Regular.Size16.Delete())" Titulo="Restaurar"></AuthorizeButton> *@
+@* *@
+@*                                  <FluentButton aria-label="Restaurar" IconEnd="@(new Icons.Light.Size32.Options())" />  *@
+@*                  <FluentButton aria-label="Consultar" IconEnd="@(new Icons.Light.Size32.ZoomIn())" OnClick="@(()=> navigation.NavigateTo($"/contasgerenciais/{(int)Enumeradores.TipoView.Consultar}/{id:int}"))" />  *@
+@*             </TemplateColumn> *@
+@*         </ChildContent> *@
+@* *@
+@*         <LoadingContent> *@
+@*             <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"> *@
+@*                 Carregando...<br /> *@
+@*                 <FluentProgress Width="240px" /> *@
+@*             </FluentStack> *@
+@*         </LoadingContent> *@
+@*     </FluentDataGrid> *@
+@* </FluentCard> *@
+@* *@
+@* <LDN_Paginator Pagination="pagination" strTipo="usuários"> </LDN_Paginator> *@
+@* @* *@
+@* <FluentButton OnClick="@(()=> navigation.NavigateTo("/usuarios"))" IconStart="@(new Icons.Regular.Size16.ArrowStepBack())"> Voltar </FluentButton> *@ *@
+@* *@
+@* @code { *@
+@*     public IQueryable<Users> UsuariosBloqueados { get; set; } *@
+@*     public int id { get; set; } *@
+@*     public PaginationState pagination { get; set; } = new PaginationState { ItemsPerPage = 10 }; *@
+@*     string nomeFiltro = string.Empty; *@
+@*     protected override Task OnInitializedAsync() *@
+@*     { *@
+@*         //retorna todos os usuários que não estejam bloqueados *@
+@*         UsuariosBloqueados = rep.RetornaTodos().Where(x => x.LockoutEnabled == false).AsQueryable(); *@
+@* *@
+@*         return base.OnInitializedAsync(); *@
+@*     } *@
+@*     public async void RestaurarUsuario(int id) *@
+@*     { *@
+@*         // var user = rep.RetornaUm(id); *@
+@*         // *@
+@*         // user.AccessFailedCount = 0; *@
+@*         // user.LockoutEnabled = true; *@
+@*         // await rep.AtualizarUsuario(user); *@
+@*     } *@
+@* *@
+@*     private void Filtrar(ChangeEventArgs args) *@
+@*     { *@
+@*         if (args.Value is string value) *@
+@*         { *@
+@*             nomeFiltro = value; *@
+@*         } *@
+@* *@
+@*     } *@
+@* *@
+@*     private void Limpar() *@
+@*     { *@
+@*         if (string.IsNullOrWhiteSpace(nomeFiltro)) *@
+@*         { *@
+@*             nomeFiltro = string.Empty; *@
+@*         } *@
+@*     } *@
+@* *@
+@* *@
+@*     //nao sei pra q serve, tava na documentacao do fluent *@
+@*     public class StringLengthComparer : IComparer<string> *@
+@*     { *@
+@*         public static readonly StringLengthComparer Instance = new StringLengthComparer(); *@
+@* *@
+@*         public int Compare(string? x, string? y) *@
+@*         { *@
+@*             if (x is null) *@
+@*             { *@
+@*                 return y is null ? 0 : -1; *@
+@*             } *@
+@* *@
+@*             if (y is null) *@
+@*             { *@
+@*                 return 1; *@
+@*             } *@
+@* *@
+@*             return x.Length.CompareTo(y.Length); *@
+@*         } *@
+@*     } *@
+@* *@
+@* *@
+@* } *@

@@ -1,141 +1,116 @@
-﻿@page "/contasgerenciais/{tipoView:int}/{id:int}"
-
-@rendermode InteractiveServer
-@inject DeletedAccountRepository rep
-@inject CNT002_ContasExcluidasRepositorio repCancelamento
-@inject AuthenticationStateProvider auth
-@inject NavigationManager navigation
-
-<h3 class="centralizado"> @txtBotao </h3>
-
-<FluentMenuProvider />
-<AuthorizeView Context="authorize">
-
-    <FluentCard Height="200px" AreaRestricted="false">
-        <FluentEditForm Model="@Conta" FormName="submit" Context="edit">
-            <DataAnnotationsValidator />
-            <FluentGrid>
-                @if (TipoView != (int)Enumeradores.TipoView.Criar)
-                {
-                    <FluentGridItem xs="3">
-                        <FluentNumberField Label="ID de Usuário" Id="id" Class="label-top" @bind-Value="Conta.idContaGerencial" ReadOnly="true" />
-                    </FluentGridItem>
-                }
-
-                <FluentGridItem xs="3">
-                    <FluentTextField Placeholder="Descrição..." Label="Descrição" Id="descritivo" Class="label-top" @bind-Value="Conta.Descricao" ReadOnly="@Disabled" />
-                    <FluentValidationMessage For="@(() => Conta.Descricao)" />
-                </FluentGridItem>
-
-                @if (TipoView == (int)Enumeradores.TipoView.Consultar && TipoView == (int)Enumeradores.TipoView.Apagar)
-                {
-                    <FluentGridItem xs="3">
-                        <FluentDatePicker Label="Data de Criação" Name="datepicker" @bind-Value="Conta.DataCadastro" ReadOnly="@Disabled" />
-                        <FluentValidationMessage For="@(() => Conta.DataCadastro)" />
-                    </FluentGridItem>
-                }
-                @if (TipoView == (int)Enumeradores.TipoView.Apagar)
-                {
-                    <br />
-                    <FluentGridItem xs="6" sm="12">
-                        <FluentTextArea Label="Data da movimentação" Name="datepicker" @bind-Value="MotivoCancelamento" ReadOnly="false" />
-                    </FluentGridItem>
-                }
-            </FluentGrid>
-            <br />
-
-            @if (TipoView != (int)Enumeradores.TipoView.Consultar)
-            {
-                <FluentButton OnClick="@(()=> AcionarBotao())" Type="ButtonType.Submit" FormId="submit" IconStart="IconeBotao"> @txtBotao </FluentButton>
-            }
-            <FluentButton Type="ButtonType.Button" Disabled="false" OnClick="@(()=> navigation.NavigateTo("/contasgerenciais"))" IconStart="@(new Icons.Regular.Size20.ArrowStepBack())"> Retornar </FluentButton>
-
-        </FluentEditForm>
-    </FluentCard>
-</AuthorizeView>
-@code {
-    #region Propriedades
-    [Parameter]
-    public int TipoView { get; set; }
-    [Parameter]
-    public int id { get; set; }
-    [SupplyParameterFromForm]
-    public string MotivoCancelamento { get; set; } = "";
-    public Account Conta { get; set; } = new Account();
-    public string txtBotao { get; set; } = "Adicionar Conta Administrativa";
-    public bool Disabled { get; set; } = false;
-    private ClaimsPrincipal? currentUser;
-    private string Username { get; set; }
-    public Icon IconeBotao { get; set; }
-    #endregion
-
-    protected override void OnInitialized()
-    {
-        if (TipoView != (int)Enumeradores.TipoView.Criar)
-        {
-            Conta = rep.RetornaConta(id);
-        }
-    }
-    public void AcionarBotao()
-    {
-        switch (TipoView)
-        {
-            case (int)Enumeradores.TipoView.Criar:
-                Conta.DataCadastro = DateTime.Now;
-                rep.Inserir(Conta);
-                Toast.ShowSuccess("Conta adicionada com sucesso!");
-                break;
-            case (int)Enumeradores.TipoView.Apagar:
-                repCancelamento.Inserir(new DeletedAccount
-                    {
-                        DataExclusao = DateTime.Now,
-                        MotivoCancelamento = MotivoCancelamento,
-                        DataCadastro = Conta.DataCadastro,
-                        Descricao = Conta.Descricao,
-                        idContaGerencial = Conta.idContaGerencial,
-                        idUsuarioCriador = Conta.idUsuarioCriador,
-                        UsuarioExclusao = Username //ver se esse metodo vai funcionar corretamente
-                    });
-                rep.Remover(Conta);
-                Toast.ShowSuccess("Exclusão confirmada com sucesso!");
-                break;
-            case (int)Enumeradores.TipoView.Editar:
-                rep.Atualizar(Conta);
-                Toast.ShowSuccess("Edição confirmada com sucesso!");
-                break;
-        }
-        navigation.NavigateTo("/contasgerenciais");
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        switch (TipoView)
-        {
-            case (int)Enumeradores.TipoView.Criar:
-                txtBotao = "Criar nova conta";
-                IconeBotao = new Icons.Regular.Size20.Save();
-                break;
-
-            case (int)Enumeradores.TipoView.Editar:
-                txtBotao = "Editar conta";
-                IconeBotao = new Icons.Regular.Size20.Edit();
-
-                break;
-
-            case (int)Enumeradores.TipoView.Apagar:
-                txtBotao = "Apagar conta";
-                IconeBotao = new Icons.Regular.Size20.TrayItemRemove();
-                break;
-        }
-
-        var authState = await auth.GetAuthenticationStateAsync();
-        currentUser = authState.User;
-
-        if (currentUser?.Identity != null && currentUser.Identity.IsAuthenticated)
-        {
-            Username = currentUser.Identity.Name;
-        }
-    }
-}
-
-
+﻿@* @page "/contasgerenciais/{tipoView:int}/{id:int}" *@
+@* @using Linter.Infraestructure.Repositories *@
+@* @using Linter.Modelos.Entities *@
+@* @using Linter.Modelos.Enums *@
+@* *@
+@* @rendermode InteractiveServer *@
+@* @inject DeletedAccountRepository rep *@
+@* @inject DeletedAccountsRepository repCancelamento *@
+@* @inject AuthenticationStateProvider auth *@
+@* @inject NavigationManager navigation *@
+@* *@
+@* <h3 class="centralizado"> @txtBotao </h3> *@
+@* *@
+@* <FluentMenuProvider /> *@
+@* <AuthorizeView Context="authorize"> *@
+@* *@
+@*     <FluentCard Height="200px" AreaRestricted="false"> *@
+@*         <FluentEditForm Model="@Conta" FormName="submit" Context="edit"> *@
+@*             <DataAnnotationsValidator /> *@
+@*             <FluentGrid> *@
+@*                 @if (pgMode != (int)pgMode.Criar) *@
+@*                 { *@
+@*                     <FluentGridItem xs="3"> *@
+@*                         <FluentNumberField Label="ID de Usuário" Id="id" Class="label-top" @bind-Value="Conta.idContaGerencial" ReadOnly="true" /> *@
+@*                     </FluentGridItem> *@
+@*                 } *@
+@* *@
+@*                 <FluentGridItem xs="3"> *@
+@*                     <FluentTextField Placeholder="Descrição..." Label="Descrição" Id="descritivo" Class="label-top" @bind-Value="Conta.Description" ReadOnly="@Disabled" /> *@
+@*                     <FluentValidationMessage For="@(() => Conta.Description)" /> *@
+@*                 </FluentGridItem> *@
+@* *@
+@*                 @if (pgMode == (int)Enumeradores.TipoView.Consultar && pgMode == (int)Enumeradores.TipoView.Apagar) *@
+@*                 { *@
+@*                     <FluentGridItem xs="3"> *@
+@*                         <FluentDatePicker Label="Data de Criação" Name="datepicker" @bind-Value="Conta.DataCadastro" ReadOnly="@Disabled" /> *@
+@*                         <FluentValidationMessage For="@(() => Conta.DataCadastro)" /> *@
+@*                     </FluentGridItem> *@
+@*                 } *@
+@*                 @if (pgMode == (int)Enumeradores.TipoView.Apagar) *@
+@*                 { *@
+@*                     <br /> *@
+@*                     <FluentGridItem xs="6" sm="12"> *@
+@*                         <FluentTextArea Label="Data da movimentação" Name="datepicker" @bind-Value="CancelReason" ReadOnly="false" /> *@
+@*                     </FluentGridItem> *@
+@*                 } *@
+@*             </FluentGrid> *@
+@*             <br /> *@
+@* *@
+@*             @if (pgMode != (int)Enumeradores.TipoView.Consultar) *@
+@*             { *@
+@*                 <FluentButton OnClick="@(()=> AcionarBotao())" Type="ButtonType.Submit" FormId="submit" IconStart="IconeBotao"> @txtBotao </FluentButton> *@
+@*             } *@
+@*             <FluentButton Type="ButtonType.Button" Disabled="false" OnClick="@(()=> navigation.NavigateTo("/contasgerenciais"))" IconStart="@(new Icons.Regular.Size20.ArrowStepBack())"> Retornar </FluentButton> *@
+@* *@
+@*         </FluentEditForm> *@
+@*     </FluentCard> *@
+@* </AuthorizeView> *@
+@* @code { *@
+@*     #region Propriedades *@
+@*     [Parameter] *@
+@*     public PageMode pgMode { get; set; } *@
+@*     [Parameter] *@
+@*     public Guid id { get; set; } *@
+@*     [SupplyParameterFromForm] *@
+@*     public string CancelReason { get; set; } = ""; *@
+@*     public Account Conta { get; set; } = new Account(); *@
+@*     public string txtBotao { get; set; } = "Adicionar Conta Administrativa"; *@
+@*     public bool Disabled { get; set; } = false; *@
+@*     private ClaimsPrincipal? currentUser; *@
+@*     private string Username { get; set; } *@
+@*     public Icon IconeBotao { get; set; } *@
+@*     #endregion *@
+@* *@
+@*     protected override void OnInitialized() *@
+@*     { *@
+@*          *@
+@*     } *@
+@*     public void AcionarBotao() *@
+@*     { *@
+@*         //log *@
+@*         navigation.NavigateTo("/contasgerenciais"); *@
+@*     } *@
+@* *@
+@*     protected override async Task OnInitializedAsync() *@
+@*     { *@
+@*         // switch (pgMode) *@
+@*         // { *@
+@*         //     case (int)Enumeradores.TipoView.Criar: *@
+@*         //         txtBotao = "Criar nova conta"; *@
+@*         //         IconeBotao = new Icons.Regular.Size20.Save(); *@
+@*         //         break; *@
+@*         // *@
+@*         //     case (int)Enumeradores.TipoView.Editar: *@
+@*         //         txtBotao = "Editar conta"; *@
+@*         //         IconeBotao = new Icons.Regular.Size20.Edit(); *@
+@*         // *@
+@*         //         break; *@
+@*         // *@
+@*         //     case (int)Enumeradores.TipoView.Apagar: *@
+@*         //         txtBotao = "Apagar conta"; *@
+@*         //         IconeBotao = new Icons.Regular.Size20.TrayItemRemove(); *@
+@*         //         break; *@
+@*         // } *@
+@* *@
+@*         var authState = await auth.GetAuthenticationStateAsync(); *@
+@*         currentUser = authState.User; *@
+@* *@
+@*         if (currentUser?.Identity != null && currentUser.Identity.IsAuthenticated) *@
+@*         { *@
+@*             Username = currentUser.Identity.Name; *@
+@*         } *@
+@*     } *@
+@* } *@
+@* *@
+@* *@
