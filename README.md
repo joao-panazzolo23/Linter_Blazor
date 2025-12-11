@@ -1,0 +1,1 @@
+please, be gently welcomed by my dark-era projects, where all my code was in portuguese, many things were absolutelly coupled and even worst, nothing ever was working well. I'm trying my best to erase my past but my git blame keep showing how bad i was
